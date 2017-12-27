@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "PKM";
+}
+<div class="row">
+    <div class="navbar navbar-inverse">
+        <div class="container" style="padding: 0px 15px;">
+            <div class="navbar-header">
+                <div class="game-logo pkm">
+                    <a href="/En/PKM">
+                        <div class="crop" style="width: 60px; height: 55px;">
+                            <img src="/Content/Images/PKM.png" alt="PKM" />
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <form id="searchform" role="search" method="get" action="" class="navbar-form navbar-right searchform">
+                <div class="input-group widget-search">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-secondary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </div>
+            </form>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    @Html.MenuItem("Pokemon", "Pokemon", "PKM")
+                    @Html.MenuItem("Tier List", "TierList", "PKM")
+                    @Html.MenuItem("Abilities", "Abilities", "PKM")
+                    @Html.MenuItem("Items", "Items", "PKM")
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            Pokémon is a series of video games developed by Game Freak and published by Nintendo as part of the Pokémon media franchise. First released in 1996 in Japan for the Game Boy, the main series of role-playing video games (RPGs) has continued on each generation of Nintendo's handhelds.
+        </p>
+    </div>
+</div>

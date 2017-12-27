@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "MMEG";
+}
+<div class="row">
+    <div class="navbar navbar-inverse">
+        <div class="container" style="padding: 0px 15px;">
+            <div class="navbar-header">
+                <div class="game-logo mmeg">
+                    <a href="/En/MMEG">
+                        <div class="crop" style="width: 60px; height: 60px;">
+                            <img src="/Content/Images/MMEG.png" alt="MMEG" />
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <form id="searchform" role="search" method="get" action="" class="navbar-form navbar-right searchform">
+                <div class="input-group widget-search">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-secondary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </div>
+            </form>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    @Html.MenuItem("Creatures", "Creatures", "MMEG")
+                    @Html.MenuItem("Tier List", "TierList", "MMEG")
+                    @Html.MenuItem("Achievements", "Achievements", "MMEG")
+                    @Html.MenuItem("Glyphs", "Glyphs", "MMEG")
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            Enter the world of Might & Magic: Elemental Guardians - a fast-paced strategy RPG based on the medieval fantasy realm of Might & Magic.
+            Journey through enchanted lands, collecting fierce and fantastic elemental creatures, and evolve a team of mighty warriors to summon to battle on the path to victory.
+        </p>
+    </div>
+</div>
