@@ -202,7 +202,30 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MenuItem.cs" />
+    <Compile Include="Models\Base.cs" />
+    <Compile Include="Models\BaseRepository.cs" />
+    <Compile Include="Models\FEH\Hero.cs" />
+    <Compile Include="Models\FEH\Stat.cs" />
     <Compile Include="Models\GoogleEntity.cs" />
+    <Compile Include="Models\MMEG\GlyphRepository.cs" />
+    <Compile Include="Models\MMEG\GlyphViewModel.cs" />
+    <Compile Include="Models\MMEG\Rarity.cs" />
+    <Compile Include="Models\MMEG\RarityRepository.cs" />
+    <Compile Include="Models\MMEG\Shape.cs" />
+    <Compile Include="Models\MMEG\Glyph.cs" />
+    <Compile Include="Models\MMEG\ShapeRepository.cs" />
+    <Compile Include="Models\MMEG\Stat.cs" />
+    <Compile Include="Models\MMEG\StatRepository.cs" />
+    <Compile Include="Models\Names.cs" />
+    <Compile Include="Models\PKM\Pokemon.cs" />
+    <Compile Include="Models\PKM\TypeMatchup.cs" />
+    <Compile Include="Models\PKM\Type.cs" />
+    <Compile Include="Models\PKM\TypeRepository.cs" />
+    <Compile Include="Models\PKM\MoveRepository.cs" />
+    <Compile Include="Models\PKM\Move.cs" />
+    <Compile Include="Models\PKM\DamageTypes.cs" />
+    <Compile Include="Models\NameRepository.cs" />
+    <Compile Include="Models\Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +239,7 @@
     <Content Include="Content\Images\Pattern.jpg" />
     <Content Include="Content\Images\PKM.png" />
     <Content Include="Content\Images\MMEG.png" />
+    <Content Include="Content\PKM.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -231,6 +255,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -262,8 +287,8 @@
     <Content Include="Views\FEH\Index.cshtml" />
     <Content Include="Views\PKM\Index.cshtml" />
     <Content Include="Key.json" />
-    <Content Include="Views\PKM\Pokemon.cshtml" />
-    <Content Include="Views\PKM\_LayoutPKM.cshtml" />
+    <Content Include="Views\MMEG\Glyphs.cshtml" />
+    <Content Include="Views\PKM\TypeChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

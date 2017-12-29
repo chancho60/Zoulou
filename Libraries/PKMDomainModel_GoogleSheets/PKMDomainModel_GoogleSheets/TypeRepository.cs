@@ -14,7 +14,7 @@ namespace PKMDomainModel_GoogleSheets
             this._List = list;
         }
 
-        public Dictionary<Type, Double> GetTypeMatchups(List<Type> attackingList) {
+        public Dictionary<Type, Double> GetAttackingTypeMatchups(List<Type> attackingList) {
             if(this._TypeMatchups != null) {
                 return this._TypeMatchups;
             } else {

@@ -1,0 +1,225 @@
+﻿body {
+    padding-top: 80px;
+    padding-bottom: 20px;
+    background-image: url('Images/Pattern.jpg');
+    background-position: 0 0;
+    background-repeat: repeat;
+    color: #78879e;
+    font-family: "Roboto",sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500 !important;
+    color: #fff !important;
+}
+
+h1 {
+    font-size: 38px;
+    line-height: 42px;
+}
+
+h2 {
+    font-size: 30px;
+    line-height: 34px;
+}
+
+h3 {
+    font-size: 25px;
+    line-height: 29px;
+}
+
+h4 {
+    font-size: 20px;
+    line-height: 24px;
+}
+
+h5 {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+p {
+    font-size: 13px;
+    line-height: 19px;
+    margin-bottom: 10px;
+}
+
+a {
+    color: #78879e;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff;
+    text-decoration: none
+}
+
+input[type="text"] {
+    height: 36px;
+    color: #78879e;
+    background: #313d50;
+    outline: 0 !important;
+    box-shadow:none !important;
+    border: none !important;
+}
+
+.navbar {
+    background: #141c27 !important;
+    border: none !important;
+    border-bottom: 1px solid #273242 !important;
+}
+
+.navbar-brand {
+    position: relative;
+    padding-left: 30px !important;
+}
+
+.logo {
+    width: 32px;
+    position: absolute;
+    top: 7px;
+    left: 1px;
+}
+
+.navbar-header > a {
+    color: #FFFFFF !important;
+    font-size: 21px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    line-height: 18px !important;
+    text-decoration: none !important;
+}
+
+.navbar-nav > li > a {
+    font-family: 'Roboto',sans-serif;
+    color: #738298 !important;
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    line-height: 18px !important;
+    text-decoration: none !important;
+    -webkit-transition: all 1s ease 0s !important;
+    -moz-transition: all 1s ease 0s !important;
+    -o-transition: all 1s ease 0s !important;
+}
+
+.navbar-nav > li > a:hover {
+    color: #FFFFFF !important;
+    background: none;
+}
+
+.navbar-nav > li.current a {
+    color: #FFFFFF !important;
+    background: none;
+}
+
+.container, .container-fluid {
+    background: #141c27 !important;
+    padding: 15px;
+}
+
+.body-content {
+    padding: 0px 15px;
+}
+
+.crop {
+    position: relative;
+    overflow: hidden;
+}
+
+.game-button {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    background: #253343;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: auto;
+    -moz-box-shadow: 0px -5px rgba(0,0,0,0.6) inset;
+    -webkit-box-shadow: 0px -5px rgba(0,0,0,0.6) inset;
+    -o-box-shadow: 0px -5px rgba(0,0,0,0.6) inset;
+    box-shadow: 0px -5px rgba(0,0,0,0.6) inset;
+}
+
+    .game-button:hover {
+        background: #4d4d4d;
+    }
+
+    .game-button:active {
+        margin-top: 5px;
+        height: 95px;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        -o-box-shadow: none;
+    }
+
+    .game-button.small {
+        margin-top: -15px;
+        width: 60px;
+        height: 60px;
+        z-index: 2000;
+    }
+
+    .game-button.small:active {
+        margin-top: -10px;
+        height: 55px;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        -o-box-shadow: none;
+    }
+
+    .game-button .crop {
+        width: 100%;
+        height: 95%;
+        border-radius: 8px;
+    }
+
+    .game-button.zoulou img {
+        width: 80%;
+        position: absolute;
+        left: 10%;
+        top: 5%;
+    }
+
+    .game-button.pkm img {
+        width: 125%;
+        position: absolute;
+        left: 1px;
+        top: 1px;
+        transform: rotate(-25deg);
+    }
+
+    .game-button.feh img {
+        width: 100%;
+        position: absolute;
+        top: -13%;
+    }
+
+    .game-button.mmeg img {
+        width: 100%;
+        position: absolute;
+        top: 5%;
+    }
+
+.searchform button {
+    background: #404c61;
+    color: #FFFFFF;
+    border: 0;
+    outline: none !important;
+    font-size: 13px;
+    line-height: 28px;
+    height: 36px;
+}
+
+footer {
+    background: #101722;
+    border-top: 1px solid #313d50;
+}
+
+.copyright {
+    background: #141c27 !important;
+    color: #78879e;
+    text-align: center;
+}
