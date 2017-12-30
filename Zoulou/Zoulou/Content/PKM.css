@@ -1,8 +1,23 @@
 ﻿
+
+/**************************
+    
+**************************/
+
+
+
+/**************************
+    Type Chart
+**************************/
+
 #typechart {
-    color:black;
-    background-color: #E4E5DD;
-    margin:auto;
+    color: black;
+    background-color: #a5d6d7;
+    margin: auto;
+    opacity: 0.85;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid black;
 }
 
 #typechart .corner {
@@ -10,9 +25,27 @@
 }
 
 #typechart td {
-    width:40px;
-    height:40px;
-    text-align:center;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid #18417B;
+}
+
+.super-effective {
+    background-color: #69bd94;
+}
+
+.not-very-effective {
+    background-color: #6992bd;
+}
+
+.not-effective {
+    background-color: gray;
+}
+
+.outlined {
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
 }
 
 .normal {

@@ -43,79 +43,55 @@
             <table id="typechart">
                 <tr>
                     <td class="corner"></td>
-                    <td class="normal">Nor</td>
-                    <td class="fire">Fir</td>
-                    <td class="water">Wat</td>
-                    <td class="electric">Ele</td>
-                    <td class="grass">Gra</td>
-                    <td class="ice">Ice</td>
-                    <td class="fighting">Fig</td>
-                    <td class="poison">Poi</td>
-                    <td class="ground">Gro</td>
-                    <td class="flying">Fly</td>
-                    <td class="psychic">Psy</td>
-                    <td class="bug">Bug</td>
-                    <td class="rock">Roc</td>
-                    <td class="ghost">Gho</td>
-                    <td class="dragon">Dra</td>
-                    <td class="dark">Dar</td>
-                    <td class="steel">Ste</td>
-                    <td class="fairy">Fai</td>
-                </tr>
-                @foreach (KeyValuePair<String, Dictionary<String, Double>> attacking in ViewBag.AllTypesMatchups) {
-                    <tr>
-                        <td class="@attacking.Key.ToLower()">@attacking.Key.ToUpper().Substring(0, 1)@attacking.Key.ToLower().Substring(1,2)</td>
-                        @foreach (KeyValuePair<String, Dictionary<String, Double>> defending in ViewBag.AllTypesMatchups) {
-                            <td style="background-color:@(attacking.Value.ContainsKey(defending.Key) ? (attacking.Value[defending.Key]<1?"#FD3F49":"#38E156") : "");">@(attacking.Value.ContainsKey(defending.Key) ? attacking.Value[defending.Key] : 1)</td>
+                    @{ 
+                        /**********
+                         * Top Row
+                         * ********/
+
+                        foreach (String typeName in ViewBag.TypeChart.allTypes) {
+                            <td class="@typeName.ToLower()">@typeName.Substring(0, 3)</td>
                         }
-                    </tr>
+                    }
+                </tr>
+                @{ 
+                    /*****************
+                    * Left Row + Grid
+                    * ***************/
+
+                    foreach (KeyValuePair<String, Dictionary<String, Double>> typeMatchups in ViewBag.TypeChart.TypeMatchups) {
+                        <tr>
+                            <td class="@typeMatchups.Key.ToLower()">@typeMatchups.Key.Substring(0, 3)</td>
+
+                            @foreach (String typeName in ViewBag.TypeChart.allTypes) {
+                                var className = "";
+                                var modifier = "";
+
+                                //Select effectiveness
+                                if (typeMatchups.Value.ContainsKey(typeName)) {
+                                    switch (typeMatchups.Value[typeName]) {
+                                        case 0:
+                                            className = "not-effective";
+                                            break;
+                                        case 0.5:
+                                            className = "not-very-effective";
+                                            break;
+                                        case 2:
+                                            className = "super-effective";
+                                            break;
+                                    }
+
+                                    className += " outlined";
+                                    modifier = typeMatchups.Value[typeName].ToString();
+                                } else {
+                                    modifier = "1";
+                                }
+
+                                <td class="@className">@modifier</td>
+                            }
+                        </tr>
+                    }
                 }
             </table>
-
-            <!--table id="typechart">
-                <tr>
-                    <td class="corner"></td>
-                    <td class="normal">Nor</td>
-                    <td class="fire">Fir</td>
-                    <td class="water">Wat</td>
-                    <td class="electric">Ele</td>
-                    <td class="grass">Gra</td>
-                    <td class="ice">Ice</td>
-                    <td class="fighting">Fig</td>
-                    <td class="poison">Poi</td>
-                    <td class="ground">Gro</td>
-                    <td class="flying">Fly</td>
-                    <td class="psychic">Psy</td>
-                    <td class="bug">Bug</td>
-                    <td class="rock">Roc</td>
-                    <td class="ghost">Gho</td>
-                    <td class="dragon">Dra</td>
-                    <td class="dark">Dar</td>
-                    <td class="steel">Ste</td>
-                    <td class="fairy">Fai</td>
-                </tr>
-                <tr>
-                    <td class="normal">Nor</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-            </table-->
             <br />
             <br />
         </div>

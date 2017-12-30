@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -60,9 +61,11 @@ namespace Zoulou.Models.PKM {
                 for (var i = 1; i < worksheet.Count(); i++) {
                     var row = worksheet[i];
 
+                    
+
                     Guid atkTypeId = Guid.Parse(row[1].ToString());
                     Guid defTypeId = Guid.Parse(row[2].ToString());
-                    Double modifier = Double.Parse(row[3].ToString().Replace(',', '.'));
+                    Double modifier = Double.Parse(row[3].ToString().Replace(',', '.'), CultureInfo.InvariantCulture);
 
                     if (listTypeIds.Contains(atkTypeId) || listTypeIds.Contains(defTypeId)) {
                         tempTypeMatchups.Add(TypeRepository.InitiateTypeMatchup(new TypeMatchup(atkTypeId, defTypeId, modifier)));

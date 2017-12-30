@@ -10,23 +10,29 @@ namespace Zoulou.Controllers {
         }
         
         public ActionResult TypeChart() {
-            //get all types
-            TypeRepository allTypes = new TypeRepository(TypeRepository.GetAllTypes());
+            TypeChartViewModel typeChart = new TypeChartViewModel();
 
-            //Transfert to string for the view
-            var allTypesMatchups = new Dictionary<String, Dictionary<String, Double>>();
+            //get all TypeMatchups
+            TypeRepository allTypes = new TypeRepository(TypeRepository.GetAllTypes());
+            typeChart.TypeMatchups = new Dictionary<String, Dictionary<String, Double>>();
 
             foreach(var matchup in allTypes.GetTypeMatchups()) {
                 //add key if doesn't exist
-                if (!allTypesMatchups.ContainsKey(matchup.AttackingType)) {
-                    allTypesMatchups.Add(matchup.AttackingType, new Dictionary<String, Double>());
+                if (!typeChart.TypeMatchups.ContainsKey(matchup.AttackingType)) {
+                    typeChart.TypeMatchups.Add(matchup.AttackingType, new Dictionary<String, Double>());
                 }
 
                 //add matchup
-                allTypesMatchups[matchup.AttackingType].Add(matchup.DefendingType, matchup.Modifier);
+                typeChart.TypeMatchups[matchup.AttackingType].Add(matchup.DefendingType, matchup.Modifier);
             }
 
-            ViewBag.AllTypesMatchups = allTypesMatchups;
+            //Get all types as String
+            typeChart.allTypes = new List<string>();
+            foreach (Models.PKM.Type type in TypeRepository.GetAllTypes()) {
+                typeChart.allTypes.Add(type.Name);
+            }
+            
+            ViewBag.TypeChart = typeChart;
 
             return View("TypeChart");
         }

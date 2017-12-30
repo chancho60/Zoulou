@@ -218,6 +218,7 @@
     <Compile Include="Models\MMEG\StatRepository.cs" />
     <Compile Include="Models\Names.cs" />
     <Compile Include="Models\PKM\Pokemon.cs" />
+    <Compile Include="Models\PKM\TypeChartViewModel.cs" />
     <Compile Include="Models\PKM\TypeMatchup.cs" />
     <Compile Include="Models\PKM\Type.cs" />
     <Compile Include="Models\PKM\TypeRepository.cs" />
