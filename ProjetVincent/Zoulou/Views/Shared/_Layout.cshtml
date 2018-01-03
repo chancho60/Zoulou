@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/En/Home"><img class="logo" src="/Content/Images/Feather.svg" alt="Zoulou" />Zoulou</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @Html.MenuItem("Might & Magic", "Index", "MMEG")
+                    @Html.MenuItem("Fire Emblem", "Index", "FEH")
+                    @Html.MenuItem("Pokemon", "Index", "PKM")
+                </ul>
+            </div>
+        </div>
+    </div>
+    @RenderPage("~/Views/" + this.ViewContext.RouteData.Values["controller"].ToString() + "/Navbar.cshtml")
+    <div class="container-fluid body-content">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+    <footer>
+        <div class="copyright">
+            <p>&copy; @DateTime.Now.Year - Zoulou</p>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

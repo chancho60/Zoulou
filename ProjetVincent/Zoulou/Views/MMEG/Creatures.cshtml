@@ -1,0 +1,158 @@
+﻿@model Zoulou.Models.MMEG.CreatureViewModel
+@{
+    ViewBag.Title = "MMEG - Creatures";
+}
+<div class="row">
+    <div class="col-md-12 mmeg-filter-row">
+        <div class="mmeg-filter-button" onclick="filter(this, 'Fire', 'Element')">
+            <span class="ra ra-flame-symbol"></span>
+        </div>
+        <div class="mmeg-filter-button" onclick="filter(this, 'Earth', 'Element')">
+            <span class="glyphicon glyphicon-leaf"></span>
+        </div>
+        <div class="mmeg-filter-button" onclick="filter(this, 'Air', 'Element')">
+            <span class="glyphicon glyphicon-cloud"></span>
+        </div>
+        <div class="mmeg-filter-button" onclick="filter(this, 'Water', 'Element')">
+            <span class="ra ra-water-drop"></span>
+        </div>
+    </div>
+    <div class="col-md-12 mmeg-filter-row">
+        <div class="mmeg-filter-button" onclick="filter(this, 'Attacker', 'Role')" title="Attacker">
+            <span class="ra ra-sword"></span>
+        </div>
+        <div class="mmeg-filter-button" onclick="filter(this, 'Defender', 'Role')" title="Defender">
+            <span class="ra ra-shield"></span>
+        </div>
+        <div class="mmeg-filter-button" onclick="filter(this, 'Saboteur', 'Role')" title="Saboteur">
+            <span class="ra ra-hood"></span>
+        </div>
+        <div class="mmeg-filter-button" onclick="filter(this, 'Support', 'Role')" title="Support">
+            <span class="ra ra-angel-wings"></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table id="tblCreatures" class="boxed">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Creature", "Creatures", new { SortOrder = "NameEn" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Base Rank", "Creatures", new { SortOrder = "BaseRank" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("HP", "Creatures", new { SortOrder = "HP" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("ATK", "Creatures", new { SortOrder = "ATK" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("DEF", "Creatures", new { SortOrder = "DEF" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("SPD", "Creatures", new { SortOrder = "SPD" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("CRIT", "Creatures", new { SortOrder = "CRIT" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("CRITD", "Creatures", new { SortOrder = "CRITD" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("ACC", "Creatures", new { SortOrder = "ACC" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("RES", "Creatures", new { SortOrder = "RES" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Total", "Creatures", new { SortOrder = "Total" })
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var Creature in Model.CreaturesFiltered) {
+                    <tr class="@Creature.Element.NameEn @Creature.Role.NameEn">
+                        <td>
+                            <div class="mmeg-portrait @Creature.Element.NameEn.ToLower()">
+                                <div class="mmeg-role @Creature.Element.NameEn.ToLower()">
+                                    <span class="ra @(Creature.Role.NameEn == "Attacker"? "ra-sword": (Creature.Role.NameEn == "Defender"? "ra-shield": (Creature.Role.NameEn == "Saboteur" ? "ra-hood" : "ra-angel-wings")))"></span>
+                                </div>
+                            </div>
+                            <p>@Html.ActionLink(Creature.NameEn, "Creature", new { id = Creature.Id })</p>
+                        </td>
+                        <td>@Creature.BaseRank</td>
+                        <td>@Creature.HP</td>
+                        <td>@Creature.ATK</td>
+                        <td>@Creature.DEF</td>
+                        <td>@Creature.SPD</td>
+                        <td>@Creature.CRIT</td>
+                        <td>@Creature.CRITD</td>
+                        <td>@Creature.ACC</td>
+                        <td>@Creature.RES</td>
+                        <td>@Creature.Total</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Creature</th>
+                    <th>Base Rank</th>
+                    <th>HP</th>
+                    <th>ATK</th>
+                    <th>DEF</th>
+                    <th>SPD</th>
+                    <th>CRIT</th>
+                    <th>CRITD</th>
+                    <th>ACC</th>
+                    <th>RES</th>
+                    <th>Total</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<script>
+    var elements = [];
+    var roles = [];
+
+        function filter(a, b, c) {
+            if ($(a).hasClass("active")) {
+                $(a).removeClass("active");
+
+                if (c == "Element") {
+                    var index = elements.indexOf("." + b);
+                    if (index > -1) {
+                        elements.splice(index, 1);
+                    }
+                } else {
+                    var index = roles.indexOf("." + b);
+                    if (index > -1) {
+                        roles.splice(index, 1);
+                    }
+                }
+            } else {
+                $(a).addClass("active");
+
+                if (c == "Element") {
+                    elements.push("." + b);
+                } else {
+                    roles.push("." + b);
+                }
+            }
+
+            $('#tblCreatures tbody tr').each(function () {
+                $(this).show();
+
+                if (elements.length > 0 && !$(this).is(elements.join(", "))) {
+                    $(this).hide();
+                }
+
+                if (roles.length > 0 && !$(this).is(roles.join(", "))) {
+                    $(this).hide();
+                }
+            });
+        }
+</script>

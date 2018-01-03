@@ -1,0 +1,157 @@
+﻿
+
+/**************************
+    
+**************************/
+
+
+
+/**************************
+    Type Chart
+**************************/
+
+#typechart {
+    color: black;
+    background-color: #a5d6d7;
+    margin: auto;
+    opacity: 0.85;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid black;
+}
+
+#typechart .corner {
+    background-color:transparent;
+}
+
+#typechart td {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid #18417B;
+}
+
+.super-effective {
+    background-color: #69bd94;
+}
+
+.not-very-effective {
+    background-color: #6992bd;
+}
+
+.not-effective {
+    background-color: gray;
+}
+
+.outlined {
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.normal {
+    background-color: #A8A77A;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.fire {
+    background-color: #EE8130;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.water {
+    background-color: #6390F0;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.electric {
+    background-color: #F7D02C;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.grass {
+    background-color: #7AC74C;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.ice {
+    background-color: #96D9D6;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.fighting {
+    background-color: #C22E28;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.poison {
+    background-color: #A33EA1;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.ground {
+    background-color: #E2BF65;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.flying {
+    background-color: #A98FF3;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.psychic {
+    background-color: #F95587;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.bug {
+    background-color: #A6B91A;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.rock {
+    background-color: #B6A136;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.ghost {
+    background-color: #735797;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.dragon {
+    background-color: #6F35FC;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.dark {
+    background-color: #705746;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.steel {
+    background-color: #B7B7CE;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}
+
+.fairy {
+    background-color: #D685AD;
+    color: white;
+    text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+}

@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "PKM";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-center">
+            <h1>Type Chart</h1>
+
+            <br/>
+
+            <table id="typechart">
+                <tr>
+                    <td class="corner"></td>
+                    @{ 
+                        /**********
+                         * Top Row
+                         * ********/
+
+                        foreach (String typeName in ViewBag.TypeChart.allTypes) {
+                            <td class="@typeName.ToLower()">@typeName.Substring(0, 3)</td>
+                        }
+                    }
+                </tr>
+                @{ 
+                    /*****************
+                    * Left Row + Grid
+                    * ***************/
+
+                    foreach (KeyValuePair<String, Dictionary<String, Double>> typeMatchups in ViewBag.TypeChart.TypeMatchups) {
+                        <tr>
+                            <td class="@typeMatchups.Key.ToLower()">@typeMatchups.Key.Substring(0, 3)</td>
+
+                            @foreach (String typeName in ViewBag.TypeChart.allTypes) {
+                                var className = "";
+                                var modifier = "";
+
+                                //Select effectiveness
+                                if (typeMatchups.Value.ContainsKey(typeName)) {
+                                    switch (typeMatchups.Value[typeName]) {
+                                        case 0:
+                                            className = "not-effective";
+                                            break;
+                                        case 0.5:
+                                            className = "not-very-effective";
+                                            break;
+                                        case 2:
+                                            className = "super-effective";
+                                            break;
+                                    }
+
+                                    className += " outlined";
+                                    modifier = typeMatchups.Value[typeName].ToString();
+                                } else {
+                                    modifier = "1";
+                                }
+
+                                <td class="@className">@modifier</td>
+                            }
+                        </tr>
+                    }
+                }
+            </table>
+            <br />
+            <br />
+        </div>
+    </div>
+</div>
