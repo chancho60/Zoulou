@@ -12,18 +12,18 @@
         <div class="row mmeg-section text-center">
             @using(Html.BeginForm()) {
                 <div class="mmeg-filter-button @(Model.Creature.Element.Id == 1 ? "active" : "")">
-                    <a href="#" class="ra ra-flame-symbol"></a>
+                    <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Model.Creature.SpeciesId, stage = Model.Creature.EvolutionStage, element = 1 })" class="ra ra-flame-symbol"></a>
                 </div>
                 <div class="mmeg-filter-button @(Model.Creature.Element.Id == 4 ? "active" : "")">
-                    <a href="#" class="glyphicon glyphicon-leaf"></a>
+                    <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Model.Creature.SpeciesId, stage = Model.Creature.EvolutionStage, element = 4 })" class="glyphicon glyphicon-leaf"></a>
                 </div>
 
                 <div class="mmeg-filter-button @(Model.Creature.Element.Id == 3 ? "active" : "")">
-                    <a href="#" class="glyphicon glyphicon-cloud"></a>
+                    <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Model.Creature.SpeciesId, stage = Model.Creature.EvolutionStage, element = 3 })" class="glyphicon glyphicon-cloud"></a>
                 </div>
 
                 <div class="mmeg-filter-button @(Model.Creature.Element.Id == 2 ? "active" : "")">
-                    <a href="#" class="ra ra-water-drop"></a>
+                    <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Model.Creature.SpeciesId, stage = Model.Creature.EvolutionStage, element = 2 })" class="ra ra-water-drop"></a>
                 </div>
             }
         </div>

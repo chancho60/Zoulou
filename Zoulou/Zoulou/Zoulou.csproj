@@ -205,7 +205,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\LocalizedControllerActivator.cs" />
     <Compile Include="Controllers\MMEGController.cs" />
     <Compile Include="Controllers\PKMController.cs" />
     <Compile Include="Controllers\FEHController.cs" />
@@ -216,7 +215,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CultureMenu.cs" />
+    <Compile Include="Helpers\RouteCultureUrl.cs" />
     <Compile Include="Helpers\MenuItem.cs" />
     <Compile Include="Models\Base.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />

@@ -5,7 +5,7 @@ using System.Threading;
 using System.Web.Routing;
 
 namespace Zoulou.Helpers {
-    public static class CultureMenu {
+    public static class RouteUrlHelper {
         public static string RouteCultureUrl(this UrlHelper UrlHelper, RouteValueDictionary RouteValueDictionary, string Lang) {
             if(RouteValueDictionary.ContainsKey("culture")) {
                 if(RouteValueDictionary["culture"].ToString() != Lang) {
