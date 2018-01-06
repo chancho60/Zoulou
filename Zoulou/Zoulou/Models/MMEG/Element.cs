@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Zoulou.Models.MMEG {
     public class Element : Base {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string NameEn { get; set; }
         public string NameFr { get; set; }
     }

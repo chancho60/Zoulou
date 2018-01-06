@@ -9,8 +9,8 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 500 !important;
-    color: #fff !important;
+    font-weight: 500;
+    color: #fff;
 }
 
 h1 {
@@ -407,7 +407,14 @@ th.boxed-purple {
     -o-box-shadow: 0px -5px rgba(0,0,0,0.6) inset;
     box-shadow: 0px -5px rgba(0,0,0,0.6) inset;
     vertical-align: bottom;
+    text-align: center;
 }
+
+    .mmeg-filter-button > a {
+        text-decoration: none;
+        border: none;
+        color: inherit;
+    }
 
     .mmeg-filter-button:hover {
         background: #4a76a8;
@@ -432,4 +439,39 @@ th.boxed-purple {
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         -o-box-shadow: none;
+    }
+
+.mmeg-container {
+}
+
+.mmeg-section {
+    margin-bottom: 15px;
+}
+
+.mmeg-subsection {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px 8px;
+    font-size: 15px;
+}
+
+.mmeg-title {
+    background: #4a76a8;
+    padding: 5px 8px;
+    font-size: 15px;
+}
+
+    .mmeg-title span {
+        color: #ffffff;
+    }
+
+.mmeg-subtitle {
+    background: #253343;
+    padding: 5px 8px;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+    .mmeg-subtitle span {
+        color: #ffffff;
     }

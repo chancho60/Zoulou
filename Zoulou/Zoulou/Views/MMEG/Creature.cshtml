@@ -1,5 +1,125 @@
-﻿@model Zoulou.Models.MMEG.Creature
+﻿@model Zoulou.ViewModels.MMEG.CreatureViewModel
 @{
-    ViewBag.Title = "MMEG - " + Model.NameEn;
+    ViewBag.Title = "MMEG - " + Model.Creature.NameEn;
 }
-<h1>@Model.NameEn</h1>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 mmeg-container">
+        <div class="row mmeg-section">
+            <div class="mmeg-title">
+                <span>@Model.Creature.NameEn</span>
+            </div>
+        </div>
+        <div class="row mmeg-section text-center">
+            @using(Html.BeginForm()) {
+                <div class="mmeg-filter-button @(Model.Creature.Element.Id == 1 ? "active" : "")">
+                    <a href="#" class="ra ra-flame-symbol"></a>
+                </div>
+                <div class="mmeg-filter-button @(Model.Creature.Element.Id == 4 ? "active" : "")">
+                    <a href="#" class="glyphicon glyphicon-leaf"></a>
+                </div>
+
+                <div class="mmeg-filter-button @(Model.Creature.Element.Id == 3 ? "active" : "")">
+                    <a href="#" class="glyphicon glyphicon-cloud"></a>
+                </div>
+
+                <div class="mmeg-filter-button @(Model.Creature.Element.Id == 2 ? "active" : "")">
+                    <a href="#" class="ra ra-water-drop"></a>
+                </div>
+            }
+        </div>
+        <div class="row mmeg-section">
+            <div class="mmeg-subtitle">
+                <span class="glyphicon glyphicon-option-vertical"></span>
+                <span>Level 1 Stats</span>
+            </div>
+            <table class="boxed">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>HP</th>
+                        <th>ATK</th>
+                        <th>DEF</th>
+                        <th>SPD</th>
+                        <th>CRIT</th>
+                        <th>CRITD</th>
+                        <th>ACC</th>
+                        <th>RES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.Creature.BaseRank</td>
+                        <td>@Model.Creature.HP</td>
+                        <td>@Model.Creature.ATK</td>
+                        <td>@Model.Creature.DEF</td>
+                        <td>@Model.Creature.SPD</td>
+                        <td>@Model.Creature.CRIT</td>
+                        <td>@Model.Creature.CRITD</td>
+                        <td>@Model.Creature.ACC</td>
+                        <td>@Model.Creature.RES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row mmeg-section">
+            <div class="mmeg-subtitle">
+                <span class="glyphicon glyphicon-option-vertical"></span>
+                <span>Main Skill Evolutions</span>
+            </div>
+            <table class="boxed">
+                <thead>
+                    <tr>
+                        <th>Skill</th>
+                        <th>Description</th>
+                        <th>Cooldown</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.Creature.Skills.ElementAt(1).NameEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(1).DescEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(1).Cooldown</td>
+                    </tr>
+                    <tr>
+                        <td>@Model.Creature.Skills.ElementAt(2).NameEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(2).DescEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(2).Cooldown</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row mmeg-section">
+            <div class="mmeg-subtitle">
+                <span class="glyphicon glyphicon-option-vertical"></span>
+                <span>Secondary Skills</span>
+            </div>
+            <table class="boxed">
+                <thead>
+                    <tr>
+                        <th>Skill</th>
+                        <th>Description</th>
+                        <th>Cooldown</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.Creature.Skills.ElementAt(3).NameEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(3).DescEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(3).Cooldown</td>
+                    </tr>
+                    <tr>
+                        <td>@Model.Creature.Skills.ElementAt(4).NameEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(4).DescEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(4).Cooldown</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row mmeg-section">
+            <div class="mmeg-subtitle">
+                <span class="glyphicon glyphicon-option-vertical"></span>
+                <span>Glyph Sets</span>
+            </div>
+        </div>
+    </div>
+</div>

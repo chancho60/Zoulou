@@ -39,6 +39,15 @@
         <div class="copyright">
             <p>&copy; @DateTime.Now.Year - Zoulou</p>
         </div>
+        @{
+            var routeValues = this.ViewContext.RouteData.Values;
+            var controller = routeValues["controller"] as string;
+            var action = routeValues["action"] as string;
+        }
+        <ul>
+            <li><a href="@Url.Action(@action, @controller, new { culture = "en" })" hreflang="en" rel="alternate">English</a></li>
+            <li><a href="@Url.Action(@action, @controller, new { culture = "fr" })" hreflang="fr" rel="alternate" >Français</a></li>
+        </ul>
     </footer>
 
     @Scripts.Render("~/bundles/jquery")

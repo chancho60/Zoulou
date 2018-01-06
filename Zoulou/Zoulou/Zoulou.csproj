@@ -205,34 +205,38 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\LocalizedControllerActivator.cs" />
     <Compile Include="Controllers\MMEGController.cs" />
     <Compile Include="Controllers\PKMController.cs" />
     <Compile Include="Controllers\FEHController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Culture\CultureConstraint.cs" />
+    <Compile Include="Culture\CultureFilter.cs" />
+    <Compile Include="Culture\RouteCollectionExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MenuItem.cs" />
     <Compile Include="Models\Base.cs" />
-    <Compile Include="Models\BaseRepository.cs" />
+    <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Models\FEH\Hero.cs" />
     <Compile Include="Models\FEH\Stat.cs" />
     <Compile Include="Models\GoogleEntity.cs" />
     <Compile Include="Models\MMEG\Creature.cs" />
-    <Compile Include="Models\MMEG\CreatureRepository.cs" />
+    <Compile Include="Repositories\MMEG\CreatureRepository.cs" />
     <Compile Include="Models\MMEG\Element.cs" />
-    <Compile Include="Models\MMEG\GlyphRepository.cs" />
-    <Compile Include="Models\MMEG\CreatureViewModel.cs" />
-    <Compile Include="Models\MMEG\GlyphViewModel.cs" />
+    <Compile Include="Repositories\MMEG\GlyphRepository.cs" />
+    <Compile Include="ViewModels\MMEG\CreatureViewModel.cs" />
+    <Compile Include="ViewModels\MMEG\GlyphViewModel.cs" />
     <Compile Include="Models\MMEG\Rarity.cs" />
-    <Compile Include="Models\MMEG\RarityRepository.cs" />
+    <Compile Include="Repositories\MMEG\RarityRepository.cs" />
     <Compile Include="Models\MMEG\Role.cs" />
     <Compile Include="Models\MMEG\Shape.cs" />
     <Compile Include="Models\MMEG\Glyph.cs" />
-    <Compile Include="Models\MMEG\ShapeRepository.cs" />
+    <Compile Include="Repositories\MMEG\ShapeRepository.cs" />
     <Compile Include="Models\MMEG\Skill.cs" />
     <Compile Include="Models\MMEG\Stat.cs" />
-    <Compile Include="Models\MMEG\StatRepository.cs" />
+    <Compile Include="Repositories\MMEG\StatRepository.cs" />
     <Compile Include="Models\NameRepository.cs" />
     <Compile Include="Models\Names.cs" />
     <Compile Include="Models\PKM\DamageTypes.cs" />
@@ -251,7 +255,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Fonts\rpgawesome-webfont.svg" />
+    <Content Include="fonts\rpgawesome-webfont.svg" />
     <Content Include="Content\Images\Feather.svg" />
     <Content Include="Content\Images\FEH.png" />
     <Content Include="Content\Images\FEHBanner.jpg" />
@@ -281,9 +285,9 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\Fonts\rpgawesome-webfont.eot" />
-    <Content Include="Content\Fonts\rpgawesome-webfont.ttf" />
-    <Content Include="Content\Fonts\rpgawesome-webfont.woff" />
+    <Content Include="fonts\rpgawesome-webfont.eot" />
+    <Content Include="fonts\rpgawesome-webfont.ttf" />
+    <Content Include="fonts\rpgawesome-webfont.woff" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -326,6 +330,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Repositories\FEH\" />
+    <Folder Include="Repositories\PKM\" />
+    <Folder Include="ViewModels\FEH\" />
+    <Folder Include="ViewModels\PKM\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,4 +1,4 @@
-﻿@model Zoulou.Models.MMEG.CreatureViewModel
+﻿@model Zoulou.ViewModels.MMEG.CreatureViewModel
 @{
     ViewBag.Title = "MMEG - Creatures";
 }
@@ -81,7 +81,9 @@
                                     <span class="ra @(Creature.Role.NameEn == "Attacker"? "ra-sword": (Creature.Role.NameEn == "Defender"? "ra-shield": (Creature.Role.NameEn == "Saboteur" ? "ra-hood" : "ra-angel-wings")))"></span>
                                 </div>
                             </div>
-                            <p>@Html.ActionLink(Creature.NameEn, "Creature", new { id = Creature.Id })</p>
+                            <p>
+                                <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Creature.SpeciesId, stage = Creature.EvolutionStage, element = Creature.Element.Id })" hreflang="en" rel="alternate">@Creature.NameEn</a>
+                            </p>
                         </td>
                         <td>@Creature.BaseRank</td>
                         <td>@Creature.HP</td>

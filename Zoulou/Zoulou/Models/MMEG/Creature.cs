@@ -6,7 +6,9 @@ using System.Web;
 namespace Zoulou.Models.MMEG {
     public class Creature : Base {
         public int Id;
+        public int SpeciesId;
         public int EvolutionId;
+        public int EvolutionStage;
 
         public string NameEn { get; set; }
         public string NameFr { get; set; }
@@ -19,7 +21,7 @@ namespace Zoulou.Models.MMEG {
         public int CRITD { get; set; }
         public int ACC { get; set; }
         public int RES { get; set; }
-        public int Total { get; set; }
+        public int Total { get { return HP + ATK + DEF + SPD + CRIT + CRITD + ACC + RES; } set {; } }
 
         public virtual Element Element { get; set; }
         public virtual Role Role { get; set; }

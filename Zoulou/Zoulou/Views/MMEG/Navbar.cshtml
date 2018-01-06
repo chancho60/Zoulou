@@ -19,10 +19,18 @@
         </form>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                @Html.MenuItem("Creatures", "Creatures", "MMEG")
-                @Html.MenuItem("Tier List", "TierList", "MMEG")
-                @Html.MenuItem("Achievements", "Achievements", "MMEG")
-                @Html.MenuItem("Glyphs", "Glyphs", "MMEG")
+                <li>
+                    <a href="@Url.Action("Creatures", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Creatures</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("TierList", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Tier List</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Achievements", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Achievements</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Glyphs", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Glyphs</a>
+                </li>
             </ul>
         </div>
     </div>

@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-4">
         <div class="game-button mmeg">
-            <a href="/En/MMEG">
+            <a href="@Url.Action("Index", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">
                 <div class="crop" style="width: 100px; height: 95px;">
                     <img src="/Content/Images/MMEG.png" alt="MMEG" />
                 </div>
@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-4">
         <div class="game-button feh">
-            <a href="/En/FEH">
+            <a href="@Url.Action("Index", "FEH", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">
                 <div class="crop" style="width: 100px; height: 95px;">
                     <img src="/Content/Images/FEH.png" alt="FEH" />
                 </div>
@@ -33,7 +33,7 @@
     </div>
     <div class="col-md-4">
         <div class="game-button pkm">
-            <a href="/En/PKM">
+            <a href="@Url.Action("Index", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">
                 <div class="crop" style="width: 100px; height: 95px;">
                     <img src="/Content/Images/PKM.png" alt="PKM" />
                 </div>
