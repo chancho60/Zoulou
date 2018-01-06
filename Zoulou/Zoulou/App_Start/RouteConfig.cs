@@ -10,20 +10,20 @@ namespace Zoulou {
             routes.MapLocalizedMvcAttributeRoutes(
                 urlPrefix: "{culture}/",
                 defaults: new { culture = "en" },
-                constraints: new { culture = new CultureConstraint(defaultCulture: "en", pattern: "[a-z]{2}") }
+                constraints: new { culture = new CultureConstraint(defaultCulture: "en", pattern: "[A-z]{2}") }
             );
 
             routes.MapRoute(
                 name: "DefaultWithCulture",
-                url: "{culture}/{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                constraints: new { culture = new CultureConstraint(defaultCulture: "en", pattern: "[a-z]{2}") }
+                url: "{culture}/{controller}/{action}",
+                defaults: new { controller = "Home", action = "Index" },
+                constraints: new { culture = new CultureConstraint(defaultCulture: "en", pattern: "[A-z]{2}") }
             );
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { culture = "en", controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}",
+                defaults: new { culture = "en", controller = "Home", action = "Index" }
             );
         }
     }
