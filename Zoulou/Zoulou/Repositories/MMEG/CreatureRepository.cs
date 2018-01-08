@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.WebPages;
 using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class CreatureRepository : BaseRepository {
         private IList<IList<object>> Creatures = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Creatures");
-        private IList<IList<object>> Elements = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Elements");
-        private IList<IList<object>> Roles = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Roles");
         private IList<IList<object>> Skills = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Skills");
         
         public Creature getCreatureById(int Id) {
@@ -31,8 +26,8 @@ namespace Zoulou.Repositories.MMEG {
                         CRITD = Row[13].ToString().AsInt(),
                         ACC = Row[14].ToString().AsInt(),
                         RES = Row[15].ToString().AsInt(),
-                        Element = this.getElementById(Row[4].ToString()),
-                        Role = this.getRoleById(Row[5].ToString()),
+                        Element = new Element(Row[4].ToString().AsInt()),
+                        Role = new Role(Row[5].ToString().AsInt()),
                         Skills = new List<Skill>() {
                             this.getSkillById(Row[16].ToString()),
                             this.getSkillById(Row[17].ToString()),
@@ -67,8 +62,8 @@ namespace Zoulou.Repositories.MMEG {
                         CRITD = Row[13].ToString().AsInt(),
                         ACC = Row[14].ToString().AsInt(),
                         RES = Row[15].ToString().AsInt(),
-                        Element = this.getElementById(Row[4].ToString()),
-                        Role = this.getRoleById(Row[5].ToString()),
+                        Element = new Element(Row[4].ToString().AsInt()),
+                        Role = new Role(Row[5].ToString().AsInt()),
                         Skills = new List<Skill>() {
                             this.getSkillById(Row[16].ToString()),
                             this.getSkillById(Row[17].ToString()),
@@ -81,36 +76,6 @@ namespace Zoulou.Repositories.MMEG {
             }
 
             return List;
-        }
-
-        public Element getElementById(string Id) {
-            if(Elements != null && Elements.Count > 0) {
-                foreach(var Row in Elements) {
-                    if(Row[0].ToString() == Id) {
-                        return new Element() {
-                            Id = Row[0].ToString().AsInt(),
-                            NameEn = Row[1].ToString(),
-                            NameFr = Row[2].ToString()
-                        };
-                    }
-                }
-            }
-            return new Element();
-        }
-
-        public Role getRoleById(string Id) {
-            if(Roles != null && Roles.Count > 0) {
-                foreach(var Row in Roles) {
-                    if(Row[0].ToString() == Id) {
-                        return new Role() {
-                            Id = Row[0].ToString().AsInt(),
-                            NameEn = Row[1].ToString(),
-                            NameFr = Row[2].ToString()
-                        };
-                    }
-                }
-            }
-            return new Role();
         }
 
         public Skill getSkillById(string Id) {

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.WebPages;
+using Zoulou.Helpers;
 using Zoulou.Models.MMEG;
-using Zoulou.ViewModels.MMEG;
 using Zoulou.Repositories.MMEG;
+using Zoulou.ViewModels.MMEG;
 
 namespace Zoulou.Controllers {
     public class MMEGController : BaseController {
@@ -17,15 +15,8 @@ namespace Zoulou.Controllers {
         public ActionResult Index() {
             return View();
         }
-        
-        public ActionResult Glyphs(GlyphViewModel GlyphViewModel) {
-            if(GlyphViewModel.AvailableRarities == null || GlyphViewModel.AvailableShapes == null || GlyphViewModel.AvailableStats == null) {
-                var GlyphRepository = new GlyphRepository();
-                GlyphViewModel.AvailableRarities = GlyphRepository.getRarities();
-                GlyphViewModel.AvailableShapes = GlyphRepository.getShapes();
-                GlyphViewModel.AvailableStats = GlyphRepository.getStats();
-            }
 
+        public ActionResult Glyphs(GlyphViewModel GlyphViewModel) {
             return View(GlyphViewModel);
         }
         
@@ -53,17 +44,20 @@ namespace Zoulou.Controllers {
         }
 
         [Route("MMEG/Creature/{species}/{stage}/{element}")]
+        [Route("MMEG/Creature")]
         public ActionResult Creature(CreatureViewModel CreatureViewModel) {
-            if(this.ControllerContext.RouteData.Values["species"].ToString() != "0" && this.ControllerContext.RouteData.Values["stage"].ToString() != "0" && this.ControllerContext.RouteData.Values["element"].ToString() != "0") {
+            if(ConvertHelper.IsOfTypeCode(this.ControllerContext.RouteData.Values["species"], TypeCode.Int32)
+                && ConvertHelper.IsOfTypeCode(this.ControllerContext.RouteData.Values["stage"], TypeCode.Int32)
+                && ConvertHelper.IsOfTypeCode(this.ControllerContext.RouteData.Values["element"], TypeCode.Int32)) {
                 if(CreatureViewModel.Creatures == null) {
                     var CreatureRepository = new CreatureRepository();
                     CreatureViewModel.Creatures = CreatureRepository.getCreatures();
                 }
 
                 foreach(var Creature in CreatureViewModel.Creatures) {
-                    if(Creature.SpeciesId == this.ControllerContext.RouteData.Values["species"].ToString().AsInt()
-                        && Creature.EvolutionStage == this.ControllerContext.RouteData.Values["stage"].ToString().AsInt()
-                        && Creature.Element.Id == this.ControllerContext.RouteData.Values["element"].ToString().AsInt()) {
+                    if(Creature.SpeciesId == Convert.ToInt32(this.ControllerContext.RouteData.Values["species"])
+                        && Creature.EvolutionStage == Convert.ToInt32(this.ControllerContext.RouteData.Values["stage"])
+                        && Creature.Element.Id == Convert.ToInt32(this.ControllerContext.RouteData.Values["element"])) {
                         CreatureViewModel.Creature = Creature;
                     }
                 }

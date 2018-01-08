@@ -10,7 +10,7 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class ShapeRepository : BaseRepository {
-        IList<IList<object>> Values = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Shapes");
+        /*IList<IList<object>> Values = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Shapes");
         private List<Shape> Shapes = new List<Shape>();
 
         public List<Shape> getShapes() {
@@ -33,6 +33,6 @@ namespace Zoulou.Repositories.MMEG {
             }
 
             return new Shape();
-        }
+        }*/
     }
 }

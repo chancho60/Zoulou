@@ -18,13 +18,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/En/Home"><img class="logo" src="/Content/Images/Feather.svg" alt="Zoulou" />Zoulou</a>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })"><img class="logo" src="/Content/Images/Feather.svg" alt="Zoulou" />Zoulou</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @Html.MenuItem("Might & Magic", "Index", "MMEG")
-                    @Html.MenuItem("Fire Emblem", "Index", "FEH")
-                    @Html.MenuItem("Pokemon", "Index", "PKM")
+                    <li>
+                        <a href="@Url.Action("Index", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Might & Magic</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "FEH", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Fire Emblem</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Pokemon</a>
+                    </li>
                 </ul>
             </div>
         </div>

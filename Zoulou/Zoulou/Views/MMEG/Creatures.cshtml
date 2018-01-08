@@ -74,11 +74,11 @@
             </thead>
             <tbody>
                 @foreach(var Creature in Model.CreaturesFiltered) {
-                    <tr class="@Creature.Element.NameEn @Creature.Role.NameEn">
+                    <tr class="@Creature.Element.Name @Creature.Role.Name">
                         <td>
-                            <div class="mmeg-portrait @Creature.Element.NameEn.ToLower()">
-                                <div class="mmeg-role @Creature.Element.NameEn.ToLower()">
-                                    <span class="ra @(Creature.Role.NameEn == "Attacker"? "ra-sword": (Creature.Role.NameEn == "Defender"? "ra-shield": (Creature.Role.NameEn == "Saboteur" ? "ra-hood" : "ra-angel-wings")))"></span>
+                            <div class="mmeg-portrait @Creature.Element.Name.ToLower()">
+                                <div class="mmeg-role @Creature.Element.Name.ToLower()">
+                                    <span class="ra @(Creature.Role.Name == "Attacker"? "ra-sword": (Creature.Role.Name == "Defender"? "ra-shield": (Creature.Role.Name == "Saboteur" ? "ra-hood" : "ra-angel-wings")))"></span>
                                 </div>
                             </div>
                             <p>

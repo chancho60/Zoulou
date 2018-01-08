@@ -6,7 +6,7 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class RarityRepository : BaseRepository {
-        IList<IList<object>> Values = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Rarities");
+        /*IList<IList<object>> Values = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Rarities");
         private List<Rarity> Rarities = new List<Rarity>();
 
         public List<Rarity> getRarities() {
@@ -29,6 +29,6 @@ namespace Zoulou.Repositories.MMEG {
             }
 
             return new Rarity();
-        }
+        }*/
     }
 }

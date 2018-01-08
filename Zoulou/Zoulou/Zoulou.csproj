@@ -215,9 +215,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\RouteCultureUrl.cs" />
+    <Compile Include="Helpers\ConvertHelper.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\RouteUrlHelper.cs" />
     <Compile Include="Helpers\MenuItem.cs" />
     <Compile Include="Models\Base.cs" />
+    <Compile Include="Models\MMEG\Enums.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Models\FEH\Hero.cs" />
     <Compile Include="Models\FEH\Stat.cs" />

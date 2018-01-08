@@ -6,7 +6,7 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class StatRepository : BaseRepository {
-        IList<IList<object>> Values = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Stats");
+        /*IList<IList<object>> Values = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Stats");
         private List<Stat> Stats = new List<Stat>();
 
         public List<Stat> getStats() {
@@ -29,6 +29,6 @@ namespace Zoulou.Repositories.MMEG {
             }
 
             return new Stat();
-        }
+        }*/
     }
 }

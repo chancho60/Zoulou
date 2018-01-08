@@ -1,14 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Zoulou.Helpers;
 using Zoulou.Models.MMEG;
 
 namespace Zoulou.ViewModels.MMEG {
     public class GlyphViewModel {
-        public List<Rarity> AvailableRarities { get; set; }
-        public List<Shape> AvailableShapes { get; set; }
-        public List<Stat> AvailableStats { get; set; }
+        public Array AvailableRarities = typeof(Rarities).GetEnumValues();
+
+        public List<Stat> GetAvailableStats() {
+            List<Stat> AvailableStats = new List<Stat>();
+
+            foreach(var Stat in typeof(Stats).GetEnumValues()) {
+                switch(Stat.ToString()) {
+                    case "ATK":
+                    case "DEF":
+                    case "HP":
+                        AvailableStats.Add(new Stat((int)EnumHelper<Stats>.Parse(Stat.ToString())) { Modifier = "+" });
+                        AvailableStats.Add(new Stat((int)EnumHelper<Stats>.Parse(Stat.ToString())) { Modifier = "%" });
+                        break;
+                    case "SPD":
+                        AvailableStats.Add(new Stat((int)EnumHelper<Stats>.Parse(Stat.ToString())) { Modifier = "+" });
+                        break;
+                    case "CRIT":
+                    case "CRITD":
+                    case "ACC":
+                    case "RES":
+                        AvailableStats.Add(new Stat((int)EnumHelper<Stats>.Parse(Stat.ToString())) { Modifier = "%" });
+                        break;
+                }
+            }
+
+            return AvailableStats;
+        }
 
         public int CalculateStat(string Stat, string Rarity, string Modifier, int Level) {
             var BaseValue = 0.0;

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Web.Mvc;
-using System.Globalization;
 using System.Threading;
+using System.Web.Mvc;
 
 namespace Zoulou.Helpers {
     public static class MenuHelper {
