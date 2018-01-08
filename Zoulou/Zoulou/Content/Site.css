@@ -118,6 +118,10 @@ input[type="text"] {
     color: #FFFFFF !important;
 }
 
+.dropdown-menu {
+    background: #253343;
+}
+
 .container, .container-fluid {
     /*background: #141c27 !important;*/
     padding: 15px;

@@ -3,16 +3,13 @@
 namespace Zoulou.Helpers {
     public static class ConvertHelper {
         public static bool IsOfTypeCode(object Object, TypeCode TypeCode) {
-            bool result;
-
             try {
                 Convert.ChangeType(Object, TypeCode);
-                result = true;
+                return true;
             } catch {
-                result = false;
+                return false;
             }
 
-            return result;
         }
     }
 }

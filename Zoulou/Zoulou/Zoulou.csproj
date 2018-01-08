@@ -217,7 +217,7 @@
     </Compile>
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Helpers\RouteUrlHelper.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Helpers\MenuItem.cs" />
     <Compile Include="Models\Base.cs" />
     <Compile Include="Models\MMEG\Enums.cs" />

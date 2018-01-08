@@ -2,8 +2,8 @@
 using System.Web.Routing;
 
 namespace Zoulou.Helpers {
-    public static class RouteUrlHelper {
-        public static string RouteCultureUrl(this UrlHelper UrlHelper, RouteValueDictionary RouteValueDictionary, string Lang) {
+    public static class UrlHelper {
+        public static string RouteCultureUrl(this System.Web.Mvc.UrlHelper UrlHelper, RouteValueDictionary RouteValueDictionary, string Lang) {
             if(RouteValueDictionary.ContainsKey("culture")) {
                 if(RouteValueDictionary["culture"].ToString() != Lang) {
                     RouteValueDictionary["culture"] = Lang;
