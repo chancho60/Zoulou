@@ -405,3 +405,4 @@ C:\Users\vtremblay\Source\Repos\Zoulou\Zoulou\Zoulou\obj\Debug\Zoulou.csproj.App
 C:\Users\vtremblay\Source\Repos\Zoulou\Zoulou\Zoulou\obj\Debug\Zoulou.csproj.CoreCompileInputs.cache
 C:\Users\vtremblay\Source\Repos\Zoulou\Zoulou\Zoulou\obj\Debug\Zoulou.dll
 C:\Users\vtremblay\Source\Repos\Zoulou\Zoulou\Zoulou\obj\Debug\Zoulou.pdb
+C:\Users\vtremblay\Source\Repos\Zoulou\Zoulou\Zoulou\obj\Debug\Zoulou.csprojResolveAssemblyReference.cache

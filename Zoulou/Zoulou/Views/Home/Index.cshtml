@@ -1,13 +1,13 @@
 ﻿@{
     ViewBag.Title = "Home";
 }
-<div class="row">
-    <div class="col-md-12 text-center">
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col text-center">
         <h2>Choose a game</h2>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-4">
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col">
         <div class="game-button mmeg">
             <a href="@Url.Action("Index", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">
                 <div class="crop" style="width: 100px; height: 95px;">
@@ -19,7 +19,7 @@
             <h3>Might & Magic<br/>Elemental<br/>Guardians</h3>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="mdl-cell mdl-cell--4-col">
         <div class="game-button feh">
             <a href="@Url.Action("Index", "FEH", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">
                 <div class="crop" style="width: 100px; height: 95px;">
@@ -31,7 +31,7 @@
             <h3>Fire Emblem<br />Heroes</h3>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="mdl-cell mdl-cell--4-col">
         <div class="game-button pkm">
             <a href="@Url.Action("Index", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">
                 <div class="crop" style="width: 100px; height: 95px;">
