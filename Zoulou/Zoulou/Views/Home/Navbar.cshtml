@@ -1,26 +1,14 @@
-﻿<div class="navbar">
-    <div class="container" style="padding: 0px 15px;">
-        <div class="navbar-header">
-            <div class="game-button zoulou small">
-                <a href="@Url.Action("Index", "Home", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">
-                    <div class="crop">
-                        <img src="/Content/Images/Feather.svg" alt="MMEG" />
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="navbar-right">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="@Url.Action("Support", "Support", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Support Us</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Reviews", "Review", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Reviews</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Updates", "Update", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Updates</a>
-                </li>
-            </ul>
-        </div>
+﻿<div role="navigation" class="mdl-layout__header mdl-layout__header--seamed">
+    <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <a class="mdl-layout-title" href="@Url.Action("Index", "Home", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })"><img class="logo" src="/Content/Images/Feather.svg" alt="Zoulou" />Zoulou</a>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation -->
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="@Url.Action("Index", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Might & Magic</a>
+            <a class="mdl-navigation__link" href="@Url.Action("Index", "FEH", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Fire Emblem</a>
+            <a class="mdl-navigation__link" href="@Url.Action("Index", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Pokemon</a>
+        </nav>
     </div>
 </div>

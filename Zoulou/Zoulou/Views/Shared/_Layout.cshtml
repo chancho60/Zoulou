@@ -36,6 +36,7 @@
                         <a class="mdl-navigation__link" href="@Url.Action("Index", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Pokemon</a>
                     </nav>
                 </div>
+                @RenderPage("~/Views/" + this.ViewContext.RouteData.Values["controller"].ToString() + "/Navbar.cshtml")
                 <main class="mdl-layout__content">
                     <div class="page-content">
                         @RenderBody()
