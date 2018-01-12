@@ -4,11 +4,12 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class CreatureRepository : BaseRepository {
-        private IList<IList<object>> Creatures = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Creatures");
-        private IList<IList<object>> Skills = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Skills");
+        public CreatureRepository() : base("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo") {
+
+        }
         
         public Creature getCreatureById(int Id) {
-            foreach(var Row in Creatures) {
+            /*foreach(var Row in Creatures) {
                 if(Row[0].ToString() == Id.ToString()) {
                     return new Creature() {
                         Id = Row[0].ToString().AsInt(),
@@ -37,14 +38,15 @@ namespace Zoulou.Repositories.MMEG {
                         }
                     };
                 }
-            }
+            }*/
             return null;
         }
 
         public List<Creature> getCreatures() {
+            var test = db.GetTable<Creature>("Creatures").FindAll();
             var List = new List<Creature>();
 
-            if(Creatures != null && Creatures.Count > 0) {
+            /*if(Creatures != null && Creatures.Count > 0) {
                 foreach(var Row in Creatures) {
                     List.Add(new Creature() {
                         Id = Row[0].ToString().AsInt(),
@@ -73,26 +75,24 @@ namespace Zoulou.Repositories.MMEG {
                         }
                     });
                 }
-            }
+            }*/
 
             return List;
         }
 
         public Skill getSkillById(string Id) {
-            if(Skills != null && Skills.Count > 0) {
+            /*if(Skills != null && Skills.Count > 0) {
                 foreach(var Row in Skills) {
                     if(Row[0].ToString() == Id) {
                         return new Skill() {
                             Id = Row[0].ToString().AsInt(),
-                            NameEn = Row[1].ToString(),
-                            NameFr = Row[2].ToString(),
-                            DescEn = Row[3].ToString(),
-                            DescFr = Row[4].ToString(),
-                            Cooldown = Row[5].ToString().AsInt()
+                            NameKey = Row[1].ToString(),
+                            DescKey = Row[2].ToString(),
+                            Cooldown = Row[3].ToString().AsInt()
                         };
                     }
                 }
-            }
+            }*/
             return new Skill();
         }
     }

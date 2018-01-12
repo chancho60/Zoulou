@@ -4,10 +4,12 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class GlyphRepository : BaseRepository {
-        private IList<IList<object>> Glyphs = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Glyphs");
+        public GlyphRepository() : base("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo") {
+
+        }
 
         public Glyph getGlyphById(string Id) {
-            foreach(var Row in Glyphs) {
+            /*foreach(var Row in Glyphs) {
                 if(Row[0].ToString() == Id) {
                     return new Glyph(
                         Row[0].ToString().AsInt(), 
@@ -17,7 +19,7 @@ namespace Zoulou.Repositories.MMEG {
                         Row[4].ToString().AsInt()
                         );
                 }
-            }
+            }*/
             return null;
         }
     }

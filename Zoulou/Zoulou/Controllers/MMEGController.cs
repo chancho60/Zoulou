@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading;
@@ -7,9 +8,13 @@ using Zoulou.Helpers;
 using Zoulou.Models.MMEG;
 using Zoulou.Repositories.MMEG;
 using Zoulou.ViewModels.MMEG;
+using Zoulou.GData.Models;
+using System.Web;
+using Zoulou.GData.Impl;
 
 namespace Zoulou.Controllers {
     public class MMEGController : BaseController {
+        private Database db = new DatabaseClient().GetDatabase("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo");
         //[ValidateInput(false)]
         //[OutputCache(CacheProfile = "ZoulouCache")]
         public ActionResult Index() {

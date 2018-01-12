@@ -6,6 +6,9 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class RarityRepository : BaseRepository {
+        public RarityRepository() : base("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo") {
+
+        }
         /*IList<IList<object>> Values = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Rarities");
         private List<Rarity> Rarities = new List<Rarity>();
 

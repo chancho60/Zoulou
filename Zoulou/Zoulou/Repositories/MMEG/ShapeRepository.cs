@@ -10,6 +10,9 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class ShapeRepository : BaseRepository {
+        public ShapeRepository() : base("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo") {
+
+        }
         /*IList<IList<object>> Values = ge.getWorksheet("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo", "Shapes");
         private List<Shape> Shapes = new List<Shape>();
 

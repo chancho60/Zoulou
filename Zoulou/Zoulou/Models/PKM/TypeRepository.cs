@@ -10,8 +10,11 @@ namespace Zoulou.Models.PKM {
         private List<Type> _List;
         private List<TypeMatchup> _TypeMatchups;
         private static List<Type> _AllTypeList;
+        public TypeRepository() : base("1ZTO24BwIXAnQQpBx6e37t5Qj7tJjl-HU4Jsn9R4c9c8") {
 
-        public TypeRepository(List<Type> list):base() {
+        }
+
+        public TypeRepository(List<Type> list) : base("1ZTO24BwIXAnQQpBx6e37t5Qj7tJjl-HU4Jsn9R4c9c8") {
             this._List = list;
         }
 
@@ -22,7 +25,7 @@ namespace Zoulou.Models.PKM {
             else {
                 List<Type> resultList = new List<Type>();
 
-                var worksheet = ge.getWorksheet("1ZTO24BwIXAnQQpBx6e37t5Qj7tJjl-HU4Jsn9R4c9c8", "Types");
+                /*var worksheet = ge.getWorksheet("1ZTO24BwIXAnQQpBx6e37t5Qj7tJjl-HU4Jsn9R4c9c8", "Types");
 
                 for(var i = 1;i < worksheet.Count(); i++) {
                     var row = worksheet[i];
@@ -37,7 +40,7 @@ namespace Zoulou.Models.PKM {
                     resultList.Add(newType);
                 }
 
-                TypeRepository._AllTypeList = resultList;
+                TypeRepository._AllTypeList = resultList;*/
                 return resultList;
             }
         }
@@ -47,11 +50,11 @@ namespace Zoulou.Models.PKM {
                 return this._TypeMatchups;
             }
             else {
-                var worksheet = ge.getWorksheet("1ZTO24BwIXAnQQpBx6e37t5Qj7tJjl-HU4Jsn9R4c9c8", "TypeMatchups");
+                //var worksheet = ge.getWorksheet("1ZTO24BwIXAnQQpBx6e37t5Qj7tJjl-HU4Jsn9R4c9c8", "TypeMatchups");
                 List<TypeMatchup> tempTypeMatchups = new List<TypeMatchup>();
 
                 //Create list of concerned types ids
-                List<Guid> listTypeIds = new List<Guid>();
+                /*List<Guid> listTypeIds = new List<Guid>();
                 foreach(Type type in this._List) {
                     if (!listTypeIds.Contains(type.TypeId)) {
                         listTypeIds.Add(type.TypeId);
@@ -73,7 +76,7 @@ namespace Zoulou.Models.PKM {
                     }
                 }
 
-                this._TypeMatchups = tempTypeMatchups;
+                this._TypeMatchups = tempTypeMatchups;*/
                 return tempTypeMatchups;
             }
         }

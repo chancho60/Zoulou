@@ -1,7 +1,8 @@
-﻿<div class="navbar">
+﻿<link href="/Content/Css/mmeg.css" rel="stylesheet">
+<div class="navbar">
     <div class="container" style="padding: 0px 15px;">
         <div class="navbar-header">
-            <div class="game-button mmeg small">
+            <div class="cstm-button mmeg small">
                 <a href="@Url.Action("Index", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">
                     <div class="crop">
                         <img src="/Content/Images/MMEG.png" alt="MMEG" />
@@ -9,27 +10,22 @@
                 </a>
             </div>
         </div>
-        <form id="searchform" role="search" method="get" action="" class="navbar-form navbar-right searchform">
-            <div class="input-group widget-search">
-                <input type="text" class="form-control" placeholder="Search">
-                <div class="input-group-btn">
-                    <button class="btn btn-secondary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                </div>
-            </div>
-        </form>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="@Url.Action("Creatures", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Creatures</a>
+                    <a href="@Url.Action("TierList", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Tier List</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("TierList", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Tier List</a>
+                    <a href="@Url.Action("Creatures", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Creatures</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Achievements", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Achievements</a>
+                    <a href="@Url.Action("Glyphs", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Glyphs</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Glyphs", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Glyphs</a>
+                    <a href="@Url.Action("Skills", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Creatures</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Achievements", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Achievements</a>
                 </li>
             </ul>
         </div>

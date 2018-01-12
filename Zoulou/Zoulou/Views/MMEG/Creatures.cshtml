@@ -3,38 +3,38 @@
     ViewBag.Title = "MMEG - Creatures";
 }
 <div class="row">
-    <div class="col-md-12 mmeg-filter-row">
-        <div class="mmeg-filter-button" onclick="filter(this, 'Fire', 'Element')">
+    <div class="col-md-12 text-center">
+        <div class="cstm-button filter" onclick="filter(this, 'Fire', 'Element')">
             <span class="ra ra-flame-symbol"></span>
         </div>
-        <div class="mmeg-filter-button" onclick="filter(this, 'Earth', 'Element')">
+        <div class="cstm-button filter" onclick="filter(this, 'Earth', 'Element')">
             <span class="glyphicon glyphicon-leaf"></span>
         </div>
-        <div class="mmeg-filter-button" onclick="filter(this, 'Air', 'Element')">
+        <div class="cstm-button filter" onclick="filter(this, 'Air', 'Element')">
             <span class="glyphicon glyphicon-cloud"></span>
         </div>
-        <div class="mmeg-filter-button" onclick="filter(this, 'Water', 'Element')">
+        <div class="cstm-button filter" onclick="filter(this, 'Water', 'Element')">
             <span class="ra ra-water-drop"></span>
         </div>
     </div>
-    <div class="col-md-12 mmeg-filter-row">
-        <div class="mmeg-filter-button" onclick="filter(this, 'Attacker', 'Role')" title="Attacker">
+    <div class="col-md-12 text-center">
+        <div class="cstm-button filter" onclick="filter(this, 'Attacker', 'Role')" title="Attacker">
             <span class="ra ra-sword"></span>
         </div>
-        <div class="mmeg-filter-button" onclick="filter(this, 'Defender', 'Role')" title="Defender">
+        <div class="cstm-button filter" onclick="filter(this, 'Defender', 'Role')" title="Defender">
             <span class="ra ra-shield"></span>
         </div>
-        <div class="mmeg-filter-button" onclick="filter(this, 'Saboteur', 'Role')" title="Saboteur">
+        <div class="cstm-button filter" onclick="filter(this, 'Saboteur', 'Role')" title="Saboteur">
             <span class="ra ra-hood"></span>
         </div>
-        <div class="mmeg-filter-button" onclick="filter(this, 'Support', 'Role')" title="Support">
+        <div class="cstm-button filter" onclick="filter(this, 'Support', 'Role')" title="Support">
             <span class="ra ra-angel-wings"></span>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <table id="tblCreatures" class="boxed">
+        <table id="tblCreatures" class="cstm-table">
             <thead>
                 <tr>
                     <th>
@@ -76,8 +76,8 @@
                 @foreach(var Creature in Model.CreaturesFiltered) {
                     <tr class="@Creature.Element.Name @Creature.Role.Name">
                         <td>
-                            <div class="mmeg-portrait @Creature.Element.Name.ToLower()">
-                                <div class="mmeg-role @Creature.Element.Name.ToLower()">
+                            <div class="portrait @Creature.Element.Name.ToLower()">
+                                <div class="role @Creature.Element.Name.ToLower()">
                                     <span class="ra @(Creature.Role.Name == "Attacker"? "ra-sword": (Creature.Role.Name == "Defender"? "ra-shield": (Creature.Role.Name == "Saboteur" ? "ra-hood" : "ra-angel-wings")))"></span>
                                 </div>
                             </div>

@@ -3,36 +3,36 @@
     ViewBag.Title = "MMEG - " + Model.Creature.NameEn;
 }
 <div class="row">
-    <div class="col-md-6 col-md-offset-3 mmeg-container">
-        <div class="row mmeg-section">
-            <div class="mmeg-title">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+            <div class="title">
                 <span>@Model.Creature.NameEn</span>
             </div>
         </div>
-        <div class="row mmeg-section text-center">
+        <div class="row section text-center">
             @using(Html.BeginForm()) {
-                <div class="mmeg-filter-button @(Model.Creature.Element.Id == 1 ? "active" : "")">
+                <div class="cstm-button filter @(Model.Creature.Element.Id == 1 ? "active" : "")">
                     <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Model.Creature.SpeciesId, stage = Model.Creature.EvolutionStage, element = 1 })" class="ra ra-flame-symbol"></a>
                 </div>
-                <div class="mmeg-filter-button @(Model.Creature.Element.Id == 4 ? "active" : "")">
+                <div class="cstm-button filter @(Model.Creature.Element.Id == 4 ? "active" : "")">
                     <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Model.Creature.SpeciesId, stage = Model.Creature.EvolutionStage, element = 4 })" class="glyphicon glyphicon-leaf"></a>
                 </div>
 
-                <div class="mmeg-filter-button @(Model.Creature.Element.Id == 3 ? "active" : "")">
+                <div class="cstm-button filter @(Model.Creature.Element.Id == 3 ? "active" : "")">
                     <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Model.Creature.SpeciesId, stage = Model.Creature.EvolutionStage, element = 3 })" class="glyphicon glyphicon-cloud"></a>
                 </div>
 
-                <div class="mmeg-filter-button @(Model.Creature.Element.Id == 2 ? "active" : "")">
+                <div class="cstm-button filter @(Model.Creature.Element.Id == 2 ? "active" : "")">
                     <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Model.Creature.SpeciesId, stage = Model.Creature.EvolutionStage, element = 2 })" class="ra ra-water-drop"></a>
                 </div>
             }
         </div>
-        <div class="row mmeg-section">
-            <div class="mmeg-subtitle">
+        <div class="row">
+            <div class="subtitle">
                 <span class="glyphicon glyphicon-option-vertical"></span>
                 <span>Level 1 Stats</span>
             </div>
-            <table class="boxed">
+            <table class="cstm-table">
                 <thead>
                     <tr>
                         <th>Rank</th>
@@ -44,6 +44,7 @@
                         <th>CRITD</th>
                         <th>ACC</th>
                         <th>RES</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,16 +58,17 @@
                         <td>@Model.Creature.CRITD</td>
                         <td>@Model.Creature.ACC</td>
                         <td>@Model.Creature.RES</td>
+                        <td>@Model.Creature.Total</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="row mmeg-section">
-            <div class="mmeg-subtitle">
+        <div class="row">
+            <div class="subtitle">
                 <span class="glyphicon glyphicon-option-vertical"></span>
                 <span>Main Skill Evolutions</span>
             </div>
-            <table class="boxed">
+            <table class="cstm-table"">
                 <thead>
                     <tr>
                         <th>Skill</th>
@@ -76,24 +78,24 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>@Model.Creature.Skills.ElementAt(1).NameEn</td>
-                        <td>@Model.Creature.Skills.ElementAt(1).DescEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(1).NameKey</td>
+                        <td>@Model.Creature.Skills.ElementAt(1).DescKey</td>
                         <td>@Model.Creature.Skills.ElementAt(1).Cooldown</td>
                     </tr>
                     <tr>
-                        <td>@Model.Creature.Skills.ElementAt(2).NameEn</td>
-                        <td>@Model.Creature.Skills.ElementAt(2).DescEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(2).NameKey</td>
+                        <td>@Model.Creature.Skills.ElementAt(2).DescKey</td>
                         <td>@Model.Creature.Skills.ElementAt(2).Cooldown</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="row mmeg-section">
-            <div class="mmeg-subtitle">
+        <div class="row">
+            <div class="subtitle">
                 <span class="glyphicon glyphicon-option-vertical"></span>
                 <span>Secondary Skills</span>
             </div>
-            <table class="boxed">
+            <table class="cstm-table"">
                 <thead>
                     <tr>
                         <th>Skill</th>
@@ -103,20 +105,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>@Model.Creature.Skills.ElementAt(3).NameEn</td>
-                        <td>@Model.Creature.Skills.ElementAt(3).DescEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(3).NameKey</td>
+                        <td>@Model.Creature.Skills.ElementAt(3).DescKey</td>
                         <td>@Model.Creature.Skills.ElementAt(3).Cooldown</td>
                     </tr>
                     <tr>
-                        <td>@Model.Creature.Skills.ElementAt(4).NameEn</td>
-                        <td>@Model.Creature.Skills.ElementAt(4).DescEn</td>
+                        <td>@Model.Creature.Skills.ElementAt(4).NameKey</td>
+                        <td>@Model.Creature.Skills.ElementAt(4).DescKey</td>
                         <td>@Model.Creature.Skills.ElementAt(4).Cooldown</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="row mmeg-section">
-            <div class="mmeg-subtitle">
+        <div class="row">
+            <div class="subtitle">
                 <span class="glyphicon glyphicon-option-vertical"></span>
                 <span>Glyph Sets</span>
             </div>

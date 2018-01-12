@@ -4,30 +4,30 @@
 }
 <div class="row">
     <div class="col-md-12">
-        <table class="boxed">
+        <table class="cstm-table">
             <thead>
                 <tr>
-                    <th class="boxed-gray">Rarity</th>
+                    <th>Rarity</th>
                     @foreach(var Rarity in Model.AvailableRarities) {
-                        <th class="boxed-@Rarity.ToString().ToLower()" colspan="4">@Rarity.ToString()</th>
+                        <th colspan="4">@Rarity.ToString()</th>
                     }
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="boxed-gray">Stats / Level</td>
+                    <td>Stats / Level</td>
                     @foreach(var Rarity in Model.AvailableRarities) {
                         for(var i = 7; i <= 16; i += 3) {
-                            <td class="boxed-@Rarity.ToString().ToLower()">@i.ToString()</td>
+                            <td>@i.ToString()</td>
                         }
                     }
                 </tr>
                 @foreach(var Stat in Model.GetAvailableStats()) {
                     <tr>
-                        <td class="boxed-gray">@Stat.Name @Stat.Modifier</td>
+                        <td>@Stat.Name @Stat.Modifier</td>
                         @foreach(var Rarity in Model.AvailableRarities) {
                             for(var i = 7; i <= 16; i += 3) {
-                                <td class="boxed-@Rarity.ToString().ToLower()">@Model.CalculateStat(Stat.Name, Rarity.ToString(), Stat.Modifier, i)</td>
+                                <td>@Model.CalculateStat(Stat.Name, Rarity.ToString(), Stat.Modifier, i)</td>
                             }
                         }
                     </tr>
@@ -35,9 +35,9 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th class="boxed-gray">Rarity</th>
+                    <th>Rarity</th>
                     @foreach(var Rarity in Model.AvailableRarities) {
-                        <th class="boxed-@Rarity.ToString().ToLower()" colspan="4">@Rarity.ToString()</th>
+                        <th colspan="4">@Rarity.ToString()</th>
                     }
                 </tr>
             </tfoot>

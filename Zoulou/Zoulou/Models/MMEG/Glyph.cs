@@ -1,4 +1,6 @@
-﻿namespace Zoulou.Models.MMEG {
+﻿using System.Collections.Generic;
+
+namespace Zoulou.Models.MMEG {
     public partial class Glyph : Base {
         public int Id { get; set; }
         public int Level { get; set; }
@@ -15,6 +17,14 @@
             this.Shape = new Shape(ShapeId);
             this.Rarity = new Rarity(RarityId);
             this.Stat = new Stat(StatId);
+        }
+
+        public Glyph(IList<object> data) {
+
+        }
+
+        public Glyph() {
+
         }
     }
 }

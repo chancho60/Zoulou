@@ -212,6 +212,29 @@
     <Compile Include="Culture\CultureConstraint.cs" />
     <Compile Include="Culture\CultureFilter.cs" />
     <Compile Include="Culture\RouteCollectionExtensions.cs" />
+    <Compile Include="GData\Interfaces\IDatabase.cs" />
+    <Compile Include="GData\Interfaces\IDatabaseClient.cs" />
+    <Compile Include="GData\Interfaces\IRow.cs" />
+    <Compile Include="GData\Interfaces\ITable.cs" />
+    <Compile Include="GData\Linq\Impl\Evaluator.cs" />
+    <Compile Include="GData\Linq\Impl\ExpressionVisitor.cs" />
+    <Compile Include="GData\Linq\Impl\GDataDBQueryProvider.cs" />
+    <Compile Include="GData\Linq\Impl\OrderTranslator.cs" />
+    <Compile Include="GData\Linq\Impl\Query.cs" />
+    <Compile Include="GData\Linq\Impl\QueryProvider.cs" />
+    <Compile Include="GData\Linq\Impl\QueryTranslator.cs" />
+    <Compile Include="GData\Linq\Impl\TypeSystem.cs" />
+    <Compile Include="GData\Linq\Impl\WhereTranslator.cs" />
+    <Compile Include="GData\Linq\ITableExtensions.cs" />
+    <Compile Include="GData\Impl\Database.cs" />
+    <Compile Include="GData\Models\DatabaseClient.cs" />
+    <Compile Include="GData\Impl\OAuth2Token.cs" />
+    <Compile Include="GData\Models\Order.cs" />
+    <Compile Include="GData\Models\Query.cs" />
+    <Compile Include="GData\Impl\Row.cs" />
+    <Compile Include="GData\Impl\Serializer.cs" />
+    <Compile Include="GData\Impl\Table.cs" />
+    <Compile Include="GData\Impl\Utils.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,6 +252,7 @@
     <Compile Include="Repositories\MMEG\CreatureRepository.cs" />
     <Compile Include="Models\MMEG\Element.cs" />
     <Compile Include="Repositories\MMEG\GlyphRepository.cs" />
+    <Compile Include="Repositories\MMEG\SkillRepository.cs" />
     <Compile Include="ViewModels\MMEG\CreatureViewModel.cs" />
     <Compile Include="ViewModels\MMEG\GlyphViewModel.cs" />
     <Compile Include="Models\MMEG\Rarity.cs" />
@@ -254,11 +278,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="fonts\rpgawesome-webfont.svg" />
+    <Content Include="Content\Css\bootstrap-theme.css" />
+    <Content Include="Content\Css\bootstrap-theme.min.css" />
+    <Content Include="Content\Css\bootstrap.css" />
+    <Content Include="Content\Css\bootstrap.min.css" />
+    <Content Include="Content\Css\feh.css" />
+    <Content Include="Content\Css\mmeg.css" />
+    <Content Include="Content\Fonts\rpgawesome-webfont.svg" />
     <Content Include="Content\Images\Feather.svg" />
     <Content Include="Content\Images\FEH.png" />
     <Content Include="Content\Images\FEHBanner.jpg" />
@@ -269,45 +295,45 @@
     <Content Include="Content\Images\Pattern.jpg" />
     <Content Include="Content\Images\PKM.png" />
     <Content Include="Content\Images\MMEG.png" />
-    <Content Include="Content\PKM.css" />
-    <Content Include="Content\rpg-awesome.css" />
+    <Content Include="Content\Css\pkm.css" />
+    <Content Include="Content\Css\rpg-awesome.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\Css\site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="fonts\rpgawesome-webfont.eot" />
-    <Content Include="fonts\rpgawesome-webfont.ttf" />
-    <Content Include="fonts\rpgawesome-webfont.woff" />
-    <None Include="Scripts\jquery-3.2.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.2.1.js" />
-    <Content Include="Scripts\jquery-3.2.1.min.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.2.1.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Css\bootstrap.min.css.map" />
+    <Content Include="Content\Css\bootstrap.css.map" />
+    <Content Include="Content\Css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\Css\bootstrap-theme.css.map" />
+    <Content Include="Content\Scripts\bootstrap.js" />
+    <Content Include="Content\Scripts\bootstrap.min.js" />
+    <Content Include="Content\Fonts\rpgawesome-webfont.eot" />
+    <Content Include="Content\Fonts\rpgawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\rpgawesome-webfont.woff" />
+    <None Include="Content\Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Content\Scripts\jquery-3.2.1.js" />
+    <Content Include="Content\Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Content\Scripts\jquery-3.2.1.slim.js" />
+    <Content Include="Content\Scripts\jquery-3.2.1.slim.min.js" />
+    <Content Include="Content\Scripts\jquery-3.2.1.slim.min.map" />
+    <Content Include="Content\Scripts\jquery-3.2.1.min.map" />
+    <None Include="Content\Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Content\Scripts\jquery.validate.js" />
+    <Content Include="Content\Scripts\jquery.validate.min.js" />
+    <Content Include="Content\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\Scripts\modernizr-2.8.3.js" />
+    <Content Include="Content\Scripts\respond.js" />
+    <Content Include="Content\Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Content\Scripts\respond.matchmedia.addListener.min.js" />
+    <Content Include="Content\Scripts\respond.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -333,6 +359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Interfaces\MMEG\" />
     <Folder Include="Repositories\FEH\" />
     <Folder Include="Repositories\PKM\" />
     <Folder Include="ViewModels\FEH\" />
