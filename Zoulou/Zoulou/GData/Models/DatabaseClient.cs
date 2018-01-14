@@ -1,24 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using Newtonsoft.Json;
+﻿using System.Web;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Sheets.v4;
 using Zoulou.GData.Impl;
 using Zoulou.GData.Interfaces;
 
 namespace Zoulou.GData.Models {
-    //public class DatabaseClient : IDatabaseClient {
-    public class DatabaseClient {
+    public class DatabaseClient : IDatabaseClient {
+        private static string[] Scopes = new[] {
+            SheetsService.Scope.Spreadsheets,
+        };
+        public readonly SheetsService SheetsService;
+        private readonly GoogleCredential Credential;
 
         public DatabaseClient() {
+            this.Credential = GoogleCredential.FromFile(HttpRuntime.AppDomainAppPath + "Key.json").CreateScoped(Scopes);
+
+            this.SheetsService = new SheetsService(new BaseClientService.Initializer {
+                HttpClientInitializer = this.Credential,
+                ApplicationName = "Zoulou"
+            });
         }
 
-        public Database CreateDatabase(string name) {
-            return new Database(this, "new");
+        public IDatabase CreateDatabase(string Name) {
+            var Body = new Google.Apis.Sheets.v4.Data.Spreadsheet();
+            Body.Properties.Title = Name;
+            var Response = this.SheetsService.Spreadsheets.Create(Body).Execute();
+
+            return new Database(this, Response.SpreadsheetId);
         }
 
-        public Database GetDatabase(string Id) {
+        public IDatabase GetDatabase(string Id) {
             return new Database(this, Id);
         }
     }

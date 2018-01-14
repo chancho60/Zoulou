@@ -11,10 +11,11 @@ using Zoulou.ViewModels.MMEG;
 using Zoulou.GData.Models;
 using System.Web;
 using Zoulou.GData.Impl;
+using Zoulou.GData.Interfaces;
 
 namespace Zoulou.Controllers {
     public class MMEGController : BaseController {
-        private Database db = new DatabaseClient().GetDatabase("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo");
+        private IDatabase db = new DatabaseClient().GetDatabase("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo");
         //[ValidateInput(false)]
         //[OutputCache(CacheProfile = "ZoulouCache")]
         public ActionResult Index() {
@@ -28,7 +29,7 @@ namespace Zoulou.Controllers {
         public ActionResult Creatures(CreatureViewModel CreatureViewModel) {
             if(CreatureViewModel.Creatures == null) {
                 var CreatureRepository = new CreatureRepository();
-                CreatureViewModel.Creatures = CreatureRepository.getCreatures();
+                //CreatureViewModel.Creatures = CreatureRepository.getCreatures();
 
                 if(String.IsNullOrEmpty(CreatureViewModel.SortOrder)) {
                     CreatureViewModel.SortOrder = "Name" + Thread.CurrentThread.CurrentCulture.ToString();
@@ -56,7 +57,7 @@ namespace Zoulou.Controllers {
                 && ConvertHelper.IsOfTypeCode(this.ControllerContext.RouteData.Values["element"], TypeCode.Int32)) {
                 if(CreatureViewModel.Creatures == null) {
                     var CreatureRepository = new CreatureRepository();
-                    CreatureViewModel.Creatures = CreatureRepository.getCreatures();
+                    //CreatureViewModel.Creatures = CreatureRepository.getCreatures();
                 }
 
                 foreach(var Creature in CreatureViewModel.Creatures) {

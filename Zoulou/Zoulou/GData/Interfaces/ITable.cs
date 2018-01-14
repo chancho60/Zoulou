@@ -51,32 +51,7 @@ namespace Zoulou.GData.Interfaces {
         /// <param name="start"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        IList<IRow<T>> FindAll(int start, int count);
-
-        /// <summary>
-        /// Free text row search
-        /// </summary>
-        /// <param name="query">text to search</param>
-        /// <returns>Matching rows</returns>
-        IList<IRow<T>> Find(string query);
-
-        /// <summary>
-        /// Searches rows using a structured query
-        /// Syntax: http://code.google.com/apis/spreadsheets/data/2.0/reference.html#ListParameters
-        /// </summary>
-        /// <param name="query">structured query</param>
-        /// <returns>Matching rows</returns>
-        IList<IRow<T>> FindStructured(string query);
-
-        /// <summary>
-        /// Searches rows using a structured query, paged
-        /// Syntax: http://code.google.com/apis/spreadsheets/data/2.0/reference.html#ListParameters
-        /// </summary>
-        /// <param name="query"></param>
-        /// <param name="start"></param>
-        /// <param name="count"></param>
-        /// <returns>Matching rows</returns>
-        IList<IRow<T>> FindStructured(string query, int start, int count);
+        IList<IRow<T>> FindAll(int Start, int Count);
 
         /// <summary>
         /// Searches rows

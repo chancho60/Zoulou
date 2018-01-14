@@ -216,25 +216,12 @@
     <Compile Include="GData\Interfaces\IDatabaseClient.cs" />
     <Compile Include="GData\Interfaces\IRow.cs" />
     <Compile Include="GData\Interfaces\ITable.cs" />
-    <Compile Include="GData\Linq\Impl\Evaluator.cs" />
-    <Compile Include="GData\Linq\Impl\ExpressionVisitor.cs" />
-    <Compile Include="GData\Linq\Impl\GDataDBQueryProvider.cs" />
-    <Compile Include="GData\Linq\Impl\OrderTranslator.cs" />
-    <Compile Include="GData\Linq\Impl\Query.cs" />
-    <Compile Include="GData\Linq\Impl\QueryProvider.cs" />
-    <Compile Include="GData\Linq\Impl\QueryTranslator.cs" />
-    <Compile Include="GData\Linq\Impl\TypeSystem.cs" />
-    <Compile Include="GData\Linq\Impl\WhereTranslator.cs" />
-    <Compile Include="GData\Linq\ITableExtensions.cs" />
     <Compile Include="GData\Impl\Database.cs" />
     <Compile Include="GData\Models\DatabaseClient.cs" />
-    <Compile Include="GData\Impl\OAuth2Token.cs" />
     <Compile Include="GData\Models\Order.cs" />
     <Compile Include="GData\Models\Query.cs" />
     <Compile Include="GData\Impl\Row.cs" />
-    <Compile Include="GData\Impl\Serializer.cs" />
     <Compile Include="GData\Impl\Table.cs" />
-    <Compile Include="GData\Impl\Utils.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

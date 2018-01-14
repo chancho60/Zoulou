@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.WebPages;
+using Zoulou.GData.Interfaces;
 using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
@@ -42,9 +43,9 @@ namespace Zoulou.Repositories.MMEG {
             return null;
         }
 
-        public List<Creature> getCreatures() {
-            var test = db.GetTable<Creature>("Creatures").FindAll();
-            var List = new List<Creature>();
+        public IList<IRow<Creature>> getCreatures() {
+            var List = db.GetTable<Creature>("Creature", "Creatures").FindAll();
+            //var List = new List<Creature>();
 
             /*if(Creatures != null && Creatures.Count > 0) {
                 foreach(var Row in Creatures) {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Zoulou.GData.Interfaces;
@@ -11,49 +9,99 @@ using Zoulou.GData.Models;
 namespace Zoulou.GData.Impl {
     public class Table<T> : ITable<T> where T : new() {
         private readonly DatabaseClient Client;
-        private readonly SpreadsheetsResource SpreadSheet;
+        private readonly Sheet Sheet;
         private readonly string SpreadsheetId;
-        private readonly string SpreadsheetRange;
+        private readonly string Range;
+        private readonly ValueRange ValueRange;
 
-        public Table(DatabaseClient Client, SpreadsheetsResource SpreadSheet, string SpreadsheetId, string SpreadsheetRange) {
+        public Table(DatabaseClient Client, Sheet Sheet, string SpreadsheetId, string Range) {
             if(Client == null)
                 throw new ArgumentNullException("Client");
-            if(SpreadSheet == null)
-                throw new ArgumentNullException("SpreadSheet");
-            if(SpreadsheetId == null)
+            if(Sheet == null)
+                throw new ArgumentNullException("Sheet");
+            if(Sheet == null)
                 throw new ArgumentNullException("SpreadsheetId");
-            if(SpreadsheetRange == null)
-                throw new ArgumentNullException("SpreadsheetRange");
+            if(Sheet == null)
+                throw new ArgumentNullException("Range");
 
             this.Client = Client;
-            this.SpreadSheet = SpreadSheet;
+            this.Sheet = Sheet;
             this.SpreadsheetId = SpreadsheetId;
-            this.SpreadsheetRange = SpreadsheetRange;
+            this.Range = Range;
+            this.ValueRange = Client.SheetsService.Spreadsheets.Values.Get(SpreadsheetId, Range).Execute();
         }
 
         public void Delete() {
+            Request RequestBody = new Request() {
+                DeleteSheet = new DeleteSheetRequest() {
+                    SheetId = Sheet.Properties.SheetId
+                }
+            };
+
+            List<Request> RequestContainer = new List<Request>();
+            RequestContainer.Add(RequestBody);
+
+            BatchUpdateSpreadsheetRequest BatcUpdateRequest = new BatchUpdateSpreadsheetRequest();
+            BatcUpdateRequest.Requests = RequestContainer;
+
+            var Response = Client.SheetsService.Spreadsheets.BatchUpdate(BatcUpdateRequest, SpreadsheetId).Execute();
         }
 
         public void Clear() {
-            var Body = new ClearValuesRequest();
-            SpreadSheet.Values.Clear(Body, SpreadsheetId, SpreadsheetRange).Execute();
+            /*Request RequestBody = new Request() {
+                DeleteDimension = new DeleteDimensionRequest() {
+                    Range = new DimensionRange() {
+                        SheetId = Sheet.Properties.SheetId,
+                        Dimension = "ROWS",
+                        StartIndex = 0,
+                        EndIndex = Sheet.Properties.GridProperties.RowCount
+                    }
+                }
+            };
+
+            List<Request> RequestContainer = new List<Request>();
+            RequestContainer.Add(RequestBody);
+
+            BatchUpdateSpreadsheetRequest BatchUpdate = new BatchUpdateSpreadsheetRequest();
+            BatchUpdate.Requests = RequestContainer;
+
+            var Response = Client.SheetsService.Spreadsheets.BatchUpdate(BatchUpdate, SpreadsheetId).Execute();*/
+
+            var RequestBody = new Google.Apis.Sheets.v4.Data.ClearValuesRequest();
+
+            SpreadsheetsResource.ValuesResource.ClearRequest Request = Client.SheetsService.Spreadsheets.Values.Clear(RequestBody, SpreadsheetId, Range);
+
+            var Response = Request.Execute();
         }
 
         public void Rename(string Name) {
+            Request RequestBody = new Request() {
+                UpdateSheetProperties = new UpdateSheetPropertiesRequest() {
+                    Properties = new SheetProperties() {
+                        SheetId = Sheet.Properties.SheetId,
+                        Title = Name
+                    }
+                }
+            };
+
+            List<Request> RequestContainer = new List<Request>();
+            RequestContainer.Add(RequestBody);
+
+            BatchUpdateSpreadsheetRequest BatchUpdate = new BatchUpdateSpreadsheetRequest();
+            BatchUpdate.Requests = RequestContainer;
+
+            var Response = Client.SheetsService.Spreadsheets.BatchUpdate(BatchUpdate, SpreadsheetId).Execute();
         }
 
         public IRow<T> Add(T e) {
-            var Body = new ValueRange();
-            //Body.Values.Add();
-            SpreadSheet.Values.Append(Body, SpreadsheetId, SpreadsheetRange).Execute();
-
-            return new Row<T>("test");
+            //  TODO : Find how to add value to a range or sheet.
+            return null;
         }
 
-        public IRow<T> Get(int rowNumber) {
+        public IRow<T> Get(int RowNumber) {
             var q = new Query {
+                Start = RowNumber,
                 Count = 1,
-                Start = rowNumber,
             };
             var results = Find(q);
             if(results.Count == 0)
@@ -65,57 +113,25 @@ namespace Zoulou.GData.Impl {
             return Find(new Query());
         }
 
-        public IList<IRow<T>> FindAll(int start, int count) {
+        public IList<IRow<T>> FindAll(int Start, int Count) {
             return Find(new Query {
-                Start = start,
-                Count = count,
+                Start = Start,
+                Count = Count,
             });
-        }
-
-        public IList<IRow<T>> Find(string query) {
-            return Find(new Query { FreeQuery = query });
-        }
-
-        public IList<IRow<T>> FindStructured(string query) {
-            return Find(new Query { StructuredQuery = query });
-        }
-
-        public IList<IRow<T>> FindStructured(string query, int start, int count) {
-            return Find(new Query {
-                StructuredQuery = query,
-                Start = start,
-                Count = count,
-            });
-        }
-
-
-        public static string SerializeQuery(Query q) {
-            var b = new StringBuilder();
-
-            if(q.FreeQuery != null)
-                b.Append("q=" + Utils.UrlEncode(q.FreeQuery) + "&");
-            if(q.StructuredQuery != null)
-                b.Append("sq=" + Utils.UrlEncode(q.StructuredQuery) + "&");
-            if(q.Start > 0)
-                b.Append("start-index=" + q.Start + "&");
-            if(q.Count > 0)
-                b.Append("max-results=" + q.Count + "&");
-            if(q.Order != null) {
-                if(q.Order.ColumnName != null)
-                    b.Append("orderby=column:" + Utils.UrlEncode(q.Order.ColumnName) + "&");
-                if(q.Order.Descending)
-                    b.Append("reverse=true&");
-            }
-
-            return b.ToString();
         }
 
         public IList<IRow<T>> Find(Query q) {
             var Result = new List<IRow<T>>();
-            ValueRange Response = SpreadSheet.Values.Get(SpreadsheetId, SpreadsheetRange).Execute();
+            IEnumerable<IList<object>> Rows = ValueRange.Values.Skip(1);
 
-            foreach(var Row in Response.Values) {
-                Result.Add(new Row<T>(Row[0].ToString()) { Element = (T)Activator.CreateInstance(typeof(T), Row) });
+            if(q.Start > 0)
+                Rows = Rows.Skip(q.Start);
+            if(q.Count > 0) {
+                Rows = Rows.Take(q.Count);
+            }
+
+            foreach(var Row in Rows) {
+                Result.Add(new Row<T>(Client, Row[0].ToString()) { Element = (T)Activator.CreateInstance(typeof(T), Row) });
             }
 
             return Result;
