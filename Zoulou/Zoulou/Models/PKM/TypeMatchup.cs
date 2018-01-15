@@ -5,16 +5,23 @@ using System.Web;
 
 namespace Zoulou.Models.PKM {
     class TypeMatchup {
-        public Guid AttackingTypeId;
+        public Guid Id;
+        public int AttackingTypeId;
         public String AttackingType;
-        public Guid DefendingTypeId;
+        public int DefendingTypeId;
         public String DefendingType;
         public Double Modifier;
 
-        public TypeMatchup(Guid atkId, Guid defId, Double modifier) {
-            this.AttackingTypeId = atkId;
-            this.DefendingTypeId = defId;
-            this.Modifier = modifier;
+        public TypeMatchup() {
+
+        }
+
+        public TypeMatchup(IList<object> Data) {
+            
+            Id = Guid.Parse(Data[0].ToString());
+            AttackingTypeId = Int32.Parse(Data[1].ToString());
+            DefendingTypeId = Int32.Parse(Data[2].ToString());
+            Modifier = Double.Parse(Data[3].ToString());
         }
     }
 }

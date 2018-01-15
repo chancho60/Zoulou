@@ -9,28 +9,28 @@ namespace Zoulou.Controllers {
             return View();
         }
 
-        public ActionResult TypeChart() {
-            TypeChartViewModel typeChart = new TypeChartViewModel();
+        public ActionResult TypeChart(TypeChartViewModel typeChart) {
+
+            TypeRepository allTypes = new TypeRepository();
+            //var matchups = allTypes.GetTypeMatchups();  
 
             //get all TypeMatchups
-            TypeRepository allTypes = new TypeRepository(TypeRepository.GetAllTypes());
             typeChart.TypeMatchups = new Dictionary<String, Dictionary<String, Double>>();
 
             foreach (var matchup in allTypes.GetTypeMatchups()) {
                 //add key if doesn't exist
-                if (!typeChart.TypeMatchups.ContainsKey(matchup.AttackingType)) {
-                    typeChart.TypeMatchups.Add(matchup.AttackingType, new Dictionary<String, Double>());
+                if ( !typeChart.TypeMatchups.ContainsKey( Enum.GetName(typeof(Types), matchup.AttackingTypeId) ) ) {
+                    typeChart.TypeMatchups.Add(
+                        //position (Attk Type Name)
+                        Enum.GetName(typeof(Types), matchup.AttackingTypeId),
+                        //Value (Dict<Def Type Name, Modifer>)
+                        new Dictionary<String, Double>() { { Enum.GetName(typeof(Types), matchup.AttackingTypeId), matchup.Modifier } }
+                    );
                 }
-
-                //add matchup
-                typeChart.TypeMatchups[matchup.AttackingType].Add(matchup.DefendingType, matchup.Modifier);
             }
 
             //Get all types as String
-            typeChart.allTypes = new List<string>();
-            foreach (Models.PKM.Type type in TypeRepository.GetAllTypes()) {
-                typeChart.allTypes.Add(type.Name);
-            }
+            typeChart.allTypes = new List<String>( Enum.GetNames(typeof(Types)) );
 
             ViewBag.TypeChart = typeChart;
 

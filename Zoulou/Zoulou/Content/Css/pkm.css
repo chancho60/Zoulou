@@ -4,6 +4,25 @@
     
 **************************/
 
+body {
+    background-image: url('../Images/boxes.svg');
+}
+
+#bozes{
+    fill:gray;
+}
+
+.navbar {
+    background: black;
+}
+
+.container-fluid {
+    background: black;
+}
+
+.copyright {
+    background: black !important;
+}
 
 
 /**************************

@@ -244,6 +244,7 @@
     <Compile Include="Helpers\MenuItem.cs" />
     <Compile Include="Models\Base.cs" />
     <Compile Include="Models\MMEG\Enums.cs" />
+    <Compile Include="Models\PKM\Enums.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Models\FEH\Hero.cs" />
     <Compile Include="Models\FEH\Stat.cs" />
@@ -268,12 +269,11 @@
     <Compile Include="Models\Names.cs" />
     <Compile Include="Models\PKM\DamageTypes.cs" />
     <Compile Include="Models\PKM\Move.cs" />
-    <Compile Include="Models\PKM\MoveRepository.cs" />
     <Compile Include="Models\PKM\Pokemon.cs" />
     <Compile Include="Models\PKM\Type.cs" />
-    <Compile Include="Models\PKM\TypeChartViewModel.cs" />
+    <Compile Include="ViewModels\PKM\TypeChartViewModel.cs" />
     <Compile Include="Models\PKM\TypeMatchup.cs" />
-    <Compile Include="Models\PKM\TypeRepository.cs" />
+    <Compile Include="Repositories\PKM\TypeRepository.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -285,6 +285,8 @@
     <Content Include="Content\Css\feh.css" />
     <Content Include="Content\Css\mmeg.css" />
     <Content Include="Content\Fonts\rpgawesome-webfont.svg" />
+    <Content Include="Content\Images\BannerPKM.jpg" />
+    <Content Include="Content\Images\boxes.svg" />
     <Content Include="Content\Images\Feather.svg" />
     <Content Include="Content\Images\FEH.png" />
     <Content Include="Content\Images\FEHBanner.jpg" />
@@ -361,9 +363,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Interfaces\MMEG\" />
     <Folder Include="Repositories\FEH\" />
-    <Folder Include="Repositories\PKM\" />
     <Folder Include="ViewModels\FEH\" />
-    <Folder Include="ViewModels\PKM\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
