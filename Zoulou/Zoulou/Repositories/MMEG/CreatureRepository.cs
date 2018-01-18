@@ -5,7 +5,7 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Repositories.MMEG {
     public class CreatureRepository : BaseRepository {
-        public CreatureRepository() : base("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo") {
+        public CreatureRepository() : base("MMEG") {
 
         }
         
@@ -44,8 +44,8 @@ namespace Zoulou.Repositories.MMEG {
         }
 
         public IList<IRow<Creature>> getCreatures() {
-            var List = db.GetTable<Creature>("Creature", "Creatures").FindAll();
-            //var List = new List<Creature>();
+            var CList = Database.GetTable<Creature>("Creature").FindAll();
+            CList[0].Update();
 
             /*if(Creatures != null && Creatures.Count > 0) {
                 foreach(var Row in Creatures) {
@@ -78,7 +78,8 @@ namespace Zoulou.Repositories.MMEG {
                 }
             }*/
 
-            return List;
+            //return List;
+            return null;
         }
 
         public Skill getSkillById(string Id) {

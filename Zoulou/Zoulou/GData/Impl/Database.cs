@@ -1,59 +1,65 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Google.Apis.Sheets.v4;
+using System.Net.Http;
+using System.Text;
+using System.Xml.Linq;
 using Google.Apis.Sheets.v4.Data;
+using Newtonsoft.Json;
 using Zoulou.GData.Interfaces;
 using Zoulou.GData.Models;
 
 namespace Zoulou.GData.Impl {
     public class Database : IDatabase {
         private readonly DatabaseClient Client;
-        private readonly Spreadsheet Spreadsheet;
         private readonly string SpreadsheetId;
 
         public Database(DatabaseClient Client, string SpreadsheetId) {
-            this.SpreadsheetId = SpreadsheetId;
             this.Client = Client;
-            this.Spreadsheet = Client.SheetsService.Spreadsheets.Get(SpreadsheetId).Execute();
+            this.SpreadsheetId = SpreadsheetId;
         }
+        
+        public ITable<T> CreateTable<T>(string SheetName) where T : new() {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
 
-        //public ITable<T> CreateTable<T>(string Name, string Range) where T : new() {
-        public void CreateTable(string Name) {
-            /*Request RequestBody = new Request() {
-                AddSheet = new AddSheetRequest() {
-                    Properties = new SheetProperties() {
-                        Title = Name,
+            object Obj = new {
+                requests = new {
+                    addSheet = new {
+                        properties = new {
+                            title = SheetName
+                        }
                     }
                 }
             };
 
-            List<Request> RequestContainer = new List<Request>();
-            RequestContainer.Add(RequestBody);
+            var Content = JsonConvert.SerializeObject(Obj);
+            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
+            var Request = Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent);
+            Request.Wait();
 
-            BatchUpdateSpreadsheetRequest BatchUpdate = new BatchUpdateSpreadsheetRequest();
-            BatchUpdate.Requests = RequestContainer;
+            var SheetId = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result).Result.Replies[0].AddSheet.Properties.SheetId;
+            if(SheetId == null)
+                return null;
 
-            var Response = Client.SheetsService.Spreadsheets.BatchUpdate(BatchUpdate, SpreadsheetId).Execute();*/
-
-            var RequestBody = new Google.Apis.Sheets.v4.Data.Spreadsheet() {
-                Properties = new SpreadsheetProperties() {
-                    Title = Name
-                }
-            };
-
-            SpreadsheetsResource.CreateRequest Request = Client.SheetsService.Spreadsheets.Create(RequestBody);
-
-            var Response = Request.Execute();
+            return new Table<T>(Client, SpreadsheetId, SheetId, SheetName);
         }
 
-        public ITable<T> GetTable<T>(string Name, string Range) where T : new() {
-            var Result = Spreadsheet.Sheets.Where(S => S.Properties.Title == Name).FirstOrDefault();
+        public ITable<T> GetTable<T>(string SheetName) where T : new() {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId;
 
-            return new Table<T>(Client, Result, SpreadsheetId, Range);
+            var Request = Client.RequestFactory.GetHttpClient().GetAsync(Uri);
+            Request.Wait();
+
+            var SheetId = Client.RequestFactory.SheetsService.DeserializeResponse<Spreadsheet>(Request.Result).Result.Sheets.Where(S => S.Properties.Title == SheetName).Select(S => S.Properties.SheetId).FirstOrDefault();
+            if(SheetId == null)
+                return null;
+
+            return new Table<T>(Client, SpreadsheetId, SheetId, SheetName);
         }
 
         public void Delete() {
-            //  TODO : Find how to delete a Spreadsheet
+            var Uri = "https://www.googleapis.com/drive/v3/files/" + this.SpreadsheetId + "?q=mimeType%3D'application%2Fvnd.google-apps.spreadsheet'";
+            Client.RequestFactory.GetHttpClient().DeleteAsync(Uri).Wait();
         }
     }
 }

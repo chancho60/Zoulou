@@ -9,7 +9,7 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
-        void CreateTable(string Name);
+        ITable<T> CreateTable<T>(string Name) where T : new();
 
         /// <summary>
         /// Gets an existing worksheet in this document.
@@ -17,7 +17,7 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns>Searched worksheet or null if not found</returns>
-        ITable<T> GetTable<T>(string Name, string Range) where T : new();
+        ITable<T> GetTable<T>(string Name) where T : new();
 
         /// <summary>
         /// Deletes this spreadsheet document

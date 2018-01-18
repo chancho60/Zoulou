@@ -15,7 +15,8 @@ using Zoulou.GData.Interfaces;
 
 namespace Zoulou.Controllers {
     public class MMEGController : BaseController {
-        private IDatabase db = new DatabaseClient().GetDatabase("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo");
+        private DatabaseClient db = new DatabaseClient("dataentity@formal-fragment-189316.iam.gserviceaccount.com", HttpRuntime.AppDomainAppPath + "Key.json");
+            //.GetDatabase("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo");
         //[ValidateInput(false)]
         //[OutputCache(CacheProfile = "ZoulouCache")]
         public ActionResult Index() {
@@ -30,6 +31,10 @@ namespace Zoulou.Controllers {
             if(CreatureViewModel.Creatures == null) {
                 var CreatureRepository = new CreatureRepository();
                 //CreatureViewModel.Creatures = CreatureRepository.getCreatures();
+                var showetienne = CreatureRepository.getCreatures();
+                //db.GetDatabase("MMEG").CreateTable("Testering");
+                //db.CreateDatabase("Testering");
+                //db.GetDatabase("Testering")?.Delete();
 
                 if(String.IsNullOrEmpty(CreatureViewModel.SortOrder)) {
                     CreatureViewModel.SortOrder = "Name" + Thread.CurrentThread.CurrentCulture.ToString();
@@ -39,14 +44,15 @@ namespace Zoulou.Controllers {
             var SortElements = CreatureViewModel.Elements.Where(E => E.Value == true).Select(E => E.Key).ToArray();
             var SortRoles = CreatureViewModel.Roles.Where(R => R.Value == true).Select(R => R.Key).ToArray();
 
-            CreatureViewModel.CreaturesFiltered = CreatureViewModel.Creatures
+            /*CreatureViewModel.CreaturesFiltered = CreatureViewModel.Creatures
                 .Where(C => C.EvolutionId == 0)
                 .Where(C => SortElements.Contains(C.Element.Id.ToString()))
                 .Where(C => SortRoles.Contains(C.Role.Id.ToString()))
                 .OrderBy(CreatureViewModel.SortOrder + " desc")
-                .ToList();
+                .ToList();*/
 
-            return View(CreatureViewModel);
+            //return View(CreatureViewModel);
+            return RedirectToAction("Index");
         }
 
         [Route("MMEG/Creature/{species}/{stage}/{element}")]

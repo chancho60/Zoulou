@@ -11,10 +11,12 @@ using Zoulou.Models;
 
 namespace Zoulou.Repositories {
     public partial class BaseRepository {
-        protected IDatabase db;
+        protected DatabaseClient DatabaseClient;
+        protected IDatabase Database;
 
         public BaseRepository(string Id) {
-            db = new DatabaseClient().GetDatabase(Id);
+            DatabaseClient = new DatabaseClient("dataentity@formal-fragment-189316.iam.gserviceaccount.com", HttpRuntime.AppDomainAppPath + "Key.json");
+            Database = DatabaseClient.GetDatabase(Id);
         }
     }
 }

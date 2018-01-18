@@ -1,100 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
+using Newtonsoft.Json;
 using Zoulou.GData.Interfaces;
 using Zoulou.GData.Models;
 
 namespace Zoulou.GData.Impl {
     public class Table<T> : ITable<T> where T : new() {
         private readonly DatabaseClient Client;
-        private readonly Sheet Sheet;
         private readonly string SpreadsheetId;
-        private readonly string Range;
-        private readonly ValueRange ValueRange;
+        private readonly int? SheetId;
+        private readonly string SheetName;
 
-        public Table(DatabaseClient Client, Sheet Sheet, string SpreadsheetId, string Range) {
+        public Table(DatabaseClient Client, string SpreadsheetId, int? SheetId, string SheetName) {
             if(Client == null)
                 throw new ArgumentNullException("Client");
-            if(Sheet == null)
-                throw new ArgumentNullException("Sheet");
-            if(Sheet == null)
+            if(SpreadsheetId == null)
                 throw new ArgumentNullException("SpreadsheetId");
-            if(Sheet == null)
-                throw new ArgumentNullException("Range");
+            if(SheetId == null)
+                throw new ArgumentNullException("SheetId");
+            if(SheetName == null)
+                throw new ArgumentNullException("SheetName");
 
             this.Client = Client;
-            this.Sheet = Sheet;
             this.SpreadsheetId = SpreadsheetId;
-            this.Range = Range;
-            this.ValueRange = Client.SheetsService.Spreadsheets.Values.Get(SpreadsheetId, Range).Execute();
+            this.SheetId = SheetId;
+            this.SheetName = SheetName;
         }
 
         public void Delete() {
-            Request RequestBody = new Request() {
-                DeleteSheet = new DeleteSheetRequest() {
-                    SheetId = Sheet.Properties.SheetId
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
+
+            object Obj = new {
+                requests = new {
+                    deleteSheet = new {
+                        sheetId = this.SheetId
+                    }
                 }
             };
 
-            List<Request> RequestContainer = new List<Request>();
-            RequestContainer.Add(RequestBody);
-
-            BatchUpdateSpreadsheetRequest BatcUpdateRequest = new BatchUpdateSpreadsheetRequest();
-            BatcUpdateRequest.Requests = RequestContainer;
-
-            var Response = Client.SheetsService.Spreadsheets.BatchUpdate(BatcUpdateRequest, SpreadsheetId).Execute();
+            var Content = JsonConvert.SerializeObject(Obj);
+            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
+            Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent).Wait();
         }
 
         public void Clear() {
-            /*Request RequestBody = new Request() {
-                DeleteDimension = new DeleteDimensionRequest() {
-                    Range = new DimensionRange() {
-                        SheetId = Sheet.Properties.SheetId,
-                        Dimension = "ROWS",
-                        StartIndex = 0,
-                        EndIndex = Sheet.Properties.GridProperties.RowCount
-                    }
-                }
-            };
-
-            List<Request> RequestContainer = new List<Request>();
-            RequestContainer.Add(RequestBody);
-
-            BatchUpdateSpreadsheetRequest BatchUpdate = new BatchUpdateSpreadsheetRequest();
-            BatchUpdate.Requests = RequestContainer;
-
-            var Response = Client.SheetsService.Spreadsheets.BatchUpdate(BatchUpdate, SpreadsheetId).Execute();*/
-
-            var RequestBody = new Google.Apis.Sheets.v4.Data.ClearValuesRequest();
-
-            SpreadsheetsResource.ValuesResource.ClearRequest Request = Client.SheetsService.Spreadsheets.Values.Clear(RequestBody, SpreadsheetId, Range);
-
-            var Response = Request.Execute();
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + "/values/" + SheetName + ":clear";
+            Client.RequestFactory.GetHttpClient().PostAsync(Uri, null).Wait();
         }
 
-        public void Rename(string Name) {
-            Request RequestBody = new Request() {
-                UpdateSheetProperties = new UpdateSheetPropertiesRequest() {
-                    Properties = new SheetProperties() {
-                        SheetId = Sheet.Properties.SheetId,
-                        Title = Name
+        public void Rename(string SheetName) {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
+
+            object Obj = new {
+                updateSheetProperties = new {
+                    properties = new {
+                        sheetId = this.SheetId,
+                        title = SheetName
                     }
                 }
             };
 
-            List<Request> RequestContainer = new List<Request>();
-            RequestContainer.Add(RequestBody);
-
-            BatchUpdateSpreadsheetRequest BatchUpdate = new BatchUpdateSpreadsheetRequest();
-            BatchUpdate.Requests = RequestContainer;
-
-            var Response = Client.SheetsService.Spreadsheets.BatchUpdate(BatchUpdate, SpreadsheetId).Execute();
+            var Content = JsonConvert.SerializeObject(Obj);
+            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
+            Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent).Wait();
         }
 
         public IRow<T> Add(T e) {
-            //  TODO : Find how to add value to a range or sheet.
+            //  TODO : Find how to add row.
             return null;
         }
 
@@ -121,17 +98,24 @@ namespace Zoulou.GData.Impl {
         }
 
         public IList<IRow<T>> Find(Query q) {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + "/values/" + SheetName;
+
+            var Request = Client.RequestFactory.GetHttpClient().GetAsync(Uri);
+            Request.Wait();
+
+            var ValueRange = Client.RequestFactory.SheetsService.DeserializeResponse<ValueRange>(Request.Result).Result.Values;
+
             var Result = new List<IRow<T>>();
-            IEnumerable<IList<object>> Rows = ValueRange.Values.Skip(1);
+            IList<IList<object>> Rows = ValueRange.Skip(1).ToList();
 
             if(q.Start > 0)
-                Rows = Rows.Skip(q.Start);
+                Rows = Rows.Skip(q.Start).ToList();
             if(q.Count > 0) {
-                Rows = Rows.Take(q.Count);
+                Rows = Rows.Take(q.Count).ToList();
             }
 
             foreach(var Row in Rows) {
-                Result.Add(new Row<T>(Client, Row[0].ToString()) { Element = (T)Activator.CreateInstance(typeof(T), Row) });
+                Result.Add(new Row<T>(Client, this.SpreadsheetId, SheetId, Rows.IndexOf(Row)+1) { Element = (T)Activator.CreateInstance(typeof(T), Row) });
             }
 
             return Result;
