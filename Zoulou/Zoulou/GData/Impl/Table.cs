@@ -125,12 +125,6 @@ namespace Zoulou.GData.Impl {
             });
         }
 
-        public IRow<T> FindById(string Id) {
-            return Find(new Query {
-                Id = Id,
-            }).FirstOrDefault();
-        }
-
         public IList<IRow<T>> Find(Query q) {
             var Result = new List<IRow<T>>();
             List<Dictionary<string, object>> Rows = this.Values;

@@ -23,8 +23,6 @@ namespace Zoulou.GData.Interfaces {
 
         IList<IRow<T>> FindAll(int Start, int Count);
 
-        IRow<T> FindById(string Id);
-
         IList<IRow<T>> Find(Query q);
     }
 }

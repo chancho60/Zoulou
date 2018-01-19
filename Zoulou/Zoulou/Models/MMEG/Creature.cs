@@ -1,9 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.WebPages;
+using Zoulou.Repositories.MMEG;
 
 namespace Zoulou.Models.MMEG {
     public class Creature : Base {
+        private static SkillRepository _SkillRepository;
+        private static SkillRepository SkillRepository {
+            get {
+                return _SkillRepository ??
+                    (_SkillRepository = new SkillRepository());
+            }
+        }
+
         public int Id { get; set; }
         public int SpeciesId { get; set; }
         public int EvolutionId { get; set; }
@@ -39,13 +48,13 @@ namespace Zoulou.Models.MMEG {
             RES = NamedRange["RES"].ToString().AsInt();
             Element = new Element(NamedRange["ElementId"].ToString().AsInt());
             Role = new Role(NamedRange["RoleId"].ToString().AsInt());
-            /*Skills = new List<Skill>() {
-                this.getSkillById(Row[16].ToString()),
-                this.getSkillById(Row[17].ToString()),
-                this.getSkillById(Row[18].ToString()),
-                this.getSkillById(Row[19].ToString()),
-                this.getSkillById(Row[20].ToString())
-            }*/
+            Skills = new List<Skill>() {
+                SkillRepository.GetSkillById((NamedRange.ContainsKey("Spell1Id")? NamedRange["Spell1Id"].ToString().AsInt(): -1)),
+                SkillRepository.GetSkillById((NamedRange.ContainsKey("Spell1AId")? NamedRange["Spell1AId"].ToString().AsInt(): -1)),
+                SkillRepository.GetSkillById((NamedRange.ContainsKey("Spell1BId")? NamedRange["Spell1BId"].ToString().AsInt(): -1)),
+                SkillRepository.GetSkillById((NamedRange.ContainsKey("Spell2Id")? NamedRange["Spell2Id"].ToString().AsInt(): -1)),
+                SkillRepository.GetSkillById((NamedRange.ContainsKey("Spell3Id")? NamedRange["Spell3Id"].ToString().AsInt(): -1))
+            };
         }
 
         public Creature() {
@@ -56,7 +65,6 @@ namespace Zoulou.Models.MMEG {
 
         public virtual Role Role { get; set; }
 
-        //  TODO : Get Creature Skills
-        //public virtual List<Skill> Skills { get; set; }
+        public virtual List<Skill> Skills { get; set; }
     }
 }

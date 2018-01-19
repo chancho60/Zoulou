@@ -7,35 +7,19 @@ using System.Linq.Dynamic;
 
 namespace Zoulou.Repositories.MMEG {
     public class CreatureRepository : BaseRepository {
-        protected ITable<Creature> Table;
+        protected static IList<IRow<Creature>> Creatures;
 
         public CreatureRepository() : base("MMEG") {
-            Table = Database.GetTable<Creature>("Creature");
+            if(Creatures == null) 
+                Creatures = Database.GetTable<Creature>("Creature").FindAll();
         }
         
-        public Creature GetCreatureById(string Id) {
-            return Table.FindById(Id).Element;
+        public Creature GetCreatureById(int Id) {
+            return Creatures.Where(C => C.Element.Id == Id).Select(C => C.Element).FirstOrDefault();
         }
 
         public List<Creature> GetCreatures() {
-            Table.Add(new Creature() { NameEn = "Test", DEF = 10, BaseRank = 1, SPD = 20, HP = 15 });
-            return Table.FindAll().Select(C => C.Element).ToList();
-        }
-
-        public Skill GetSkillById(string Id) {
-            /*if(Skills != null && Skills.Count > 0) {
-                foreach(var Row in Skills) {
-                    if(Row[0].ToString() == Id) {
-                        return new Skill() {
-                            Id = Row[0].ToString().AsInt(),
-                            NameKey = Row[1].ToString(),
-                            DescKey = Row[2].ToString(),
-                            Cooldown = Row[3].ToString().AsInt()
-                        };
-                    }
-                }
-            }*/
-            return new Skill();
+            return Creatures.Select(C => C.Element).ToList();
         }
     }
 }
