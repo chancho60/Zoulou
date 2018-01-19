@@ -73,7 +73,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var Creature in Model.CreaturesFiltered.Select(C => C.Element)) {
+                @foreach(var Creature in Model.CreaturesFiltered) {
                     <tr class="@Creature.Element.Name @Creature.Role.Name">
                         <td>
                             <div class="portrait @Creature.Element.Name.ToLower()">

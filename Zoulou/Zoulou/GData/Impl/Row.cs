@@ -17,17 +17,18 @@ namespace Zoulou.GData.Impl {
         public readonly string SpreadsheetId;
         public readonly int? SheetId;
         public readonly int RowId;
+        private readonly IList<object> ColumnNames;
 
-        public Row(DatabaseClient Client, string SpreadsheetId, int? SheetId, int RowId) {
+        public Row(DatabaseClient Client, string SpreadsheetId, int? SheetId, int RowId, IList<object> ColumnNames) {
             this.Client = Client;
             this.SpreadsheetId = SpreadsheetId;
             this.SheetId = SheetId;
             this.RowId = RowId;
+            this.ColumnNames = ColumnNames;
         }
 
         public void Update() {
-            //  TODO : Fix row update
-            /*var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
 
             object Obj = new {
                 requests = new {
@@ -38,26 +39,18 @@ namespace Zoulou.GData.Impl {
                             rowIndex = this.RowId,
                         },
                         rows = new {
-                            values = new {
-                                userEnteredValue = new {
-                                    stringValue = "Test"
-                                },
-                            }
+                            values = ColumnNames.Select(C => new { userEnteredValue = new { stringValue = Element.GetType().GetProperty(C.ToString())?.GetValue(Element)?.ToString() } })
                         },
                         fields = "*"
                     }
                 }
             };
 
-            foreach(var test in Element.GetType().GetProperties()) {
-                var testing = test.GetValue(Element);
-            }
-
             var Content = JsonConvert.SerializeObject(Obj);
             var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
             var Request = Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent);
             Request.Wait();
-            var Result = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result);*/
+            var Result = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result);
         }
 
         public void Delete() {

@@ -38,6 +38,9 @@
             </ul>
         </div>
     </nav>
+    @{
+        //    TODO : Doesn't pass on route values
+    }
     @RenderPage("~/Views/" + this.ViewContext.RouteData.Values["controller"].ToString() + "/Navbar.cshtml")
     <div class="container-fluid body-content">
         <div class="container">

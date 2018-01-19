@@ -2,6 +2,8 @@
 using System.Web.WebPages;
 using Zoulou.GData.Interfaces;
 using Zoulou.Models.MMEG;
+using System.Linq;
+using System.Linq.Dynamic;
 
 namespace Zoulou.Repositories.MMEG {
     public class CreatureRepository : BaseRepository {
@@ -11,15 +13,16 @@ namespace Zoulou.Repositories.MMEG {
             Table = Database.GetTable<Creature>("Creature");
         }
         
-        public Creature getCreatureById(string Id) {
+        public Creature GetCreatureById(string Id) {
             return Table.FindById(Id).Element;
         }
 
-        public IList<IRow<Creature>> GetCreatures() {
-            return Table.FindAll();
+        public List<Creature> GetCreatures() {
+            Table.Add(new Creature() { NameEn = "Test", DEF = 10, BaseRank = 1, SPD = 20, HP = 15 });
+            return Table.FindAll().Select(C => C.Element).ToList();
         }
 
-        public Skill getSkillById(string Id) {
+        public Skill GetSkillById(string Id) {
             /*if(Skills != null && Skills.Count > 0) {
                 foreach(var Row in Skills) {
                     if(Row[0].ToString() == Id) {

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Threading;
 using System.Web.Mvc;
 using Zoulou.Helpers;
 using Zoulou.Models.MMEG;
 using Zoulou.Repositories.MMEG;
 using Zoulou.ViewModels.MMEG;
-using Zoulou.GData.Models;
-using System.Web;
-using Zoulou.GData.Impl;
-using Zoulou.GData.Interfaces;
 
 namespace Zoulou.Controllers {
     public class MMEGController : BaseController {
@@ -35,9 +29,9 @@ namespace Zoulou.Controllers {
             var SortRoles = CreatureViewModel.Roles.Where(R => R.Value == true).Select(R => R.Key).ToArray();
 
             CreatureViewModel.CreaturesFiltered = CreatureViewModel.Creatures
-                .Where(C => C.Element.EvolutionId == 0)
-                .Where(C => SortElements.Contains(C.Element.Element.Id.ToString()))
-                .Where(C => SortRoles.Contains(C.Element.Role.Id.ToString()))
+                .Where(C => C.EvolutionId == 0)
+                .Where(C => SortElements.Contains(C.Element.Id.ToString()))
+                .Where(C => SortRoles.Contains(C.Role.Id.ToString()))
                 .ToList();
 
             return View(CreatureViewModel);
@@ -54,7 +48,7 @@ namespace Zoulou.Controllers {
                     CreatureViewModel.Creatures = CreatureRepository.GetCreatures();
                 }
 
-                foreach(var Creature in CreatureViewModel.Creatures.Select(C => C.Element)) {
+                foreach(var Creature in CreatureViewModel.Creatures) {
                     if(Creature.SpeciesId == Convert.ToInt32(this.ControllerContext.RouteData.Values["species"])
                         && Creature.EvolutionStage == Convert.ToInt32(this.ControllerContext.RouteData.Values["stage"])
                         && Creature.Element.Id == Convert.ToInt32(this.ControllerContext.RouteData.Values["element"])) {

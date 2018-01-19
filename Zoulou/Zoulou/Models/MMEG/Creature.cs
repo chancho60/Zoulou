@@ -4,25 +4,25 @@ using System.Web.WebPages;
 
 namespace Zoulou.Models.MMEG {
     public class Creature : Base {
-        public int Id;
-        public int SpeciesId;
-        public int EvolutionId;
-        public int EvolutionStage;
+        public int Id { get; set; }
+        public int SpeciesId { get; set; }
+        public int EvolutionId { get; set; }
+        public int EvolutionStage { get; set; }
         public string NameEn { get; set; }
         public string NameFr { get; set; }
-        public int BaseRank { get; set; }
-        public int HP { get; set; }
-        public int ATK { get; set; }
-        public int DEF { get; set; }
-        public int SPD { get; set; }
-        public int CRIT { get; set; }
-        public int CRITD { get; set; }
-        public int ACC { get; set; }
-        public int RES { get; set; }
-        public int Total { get { return HP + ATK + DEF + SPD + CRIT + CRITD + ACC + RES; } }
+        public int? BaseRank { get; set; }
+        public int? HP { get; set; }
+        public int? ATK { get; set; }
+        public int? DEF { get; set; }
+        public int? SPD { get; set; }
+        public int? CRIT { get; set; }
+        public int? CRITD { get; set; }
+        public int? ACC { get; set; }
+        public int? RES { get; set; }
+        public int? Total { get { return HP + ATK + DEF + SPD + CRIT + CRITD + ACC + RES; } }
 
         public Creature(Dictionary<string, object> NamedRange) {
-            Id = NamedRange["Id"].ToString().AsInt();
+            Id = (NamedRange.ContainsKey("Id")? NamedRange["Id"].ToString().AsInt(): -1);
             SpeciesId = NamedRange["SpeciesId"].ToString().AsInt();
             EvolutionId = NamedRange["EvolutionId"].ToString().AsInt();
             EvolutionStage = NamedRange["EvolutionStage"].ToString().AsInt();
@@ -53,7 +53,10 @@ namespace Zoulou.Models.MMEG {
         }
 
         public virtual Element Element { get; set; }
+
         public virtual Role Role { get; set; }
+
+        //  TODO : Get Creature Skills
         //public virtual List<Skill> Skills { get; set; }
     }
 }

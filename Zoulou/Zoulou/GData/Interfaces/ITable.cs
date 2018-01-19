@@ -15,7 +15,7 @@ namespace Zoulou.GData.Interfaces {
 
         void Rename(string newName);
 
-        IRow<T> Add(T e);
+        void Add(T e);
 
         IRow<T> Get(int rowNumber);
 

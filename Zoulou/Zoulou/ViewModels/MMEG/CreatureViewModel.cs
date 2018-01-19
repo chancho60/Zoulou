@@ -6,8 +6,8 @@ using Zoulou.Models.MMEG;
 namespace Zoulou.ViewModels.MMEG {
     public class CreatureViewModel {
         public Creature Creature { get; set; }
-        public IList<IRow<Creature>> Creatures { get; set; }
-        public IList<IRow<Creature>> CreaturesFiltered { get; set; }
+        public List<Creature> Creatures { get; set; }
+        public List<Creature> CreaturesFiltered { get; set; }
         public Dictionary<string, bool> Elements { get; set; }
         public Dictionary<string, bool> Roles { get; set; }
 

@@ -15,6 +15,8 @@ namespace Zoulou.GData.Impl {
         private readonly string SpreadsheetId;
         private readonly int? SheetId;
         private readonly string SheetName;
+        private readonly IList<object> ColumnNames;
+        private readonly List<Dictionary<string, object>> Values;
 
         public Table(DatabaseClient Client, string SpreadsheetId, int? SheetId, string SheetName) {
             if(Client == null)
@@ -30,6 +32,15 @@ namespace Zoulou.GData.Impl {
             this.SpreadsheetId = SpreadsheetId;
             this.SheetId = SheetId;
             this.SheetName = SheetName;
+
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + "/values/" + SheetName;
+
+            var Request = Client.RequestFactory.GetHttpClient().GetAsync(Uri);
+            Request.Wait();
+            var Response = Client.RequestFactory.SheetsService.DeserializeResponse<ValueRange>(Request.Result).Result.Values;
+
+            this.ColumnNames = Response.First();
+            this.Values = NameValueRange(Response.Skip(1).ToList());
         }
 
         public void Delete() {
@@ -70,37 +81,26 @@ namespace Zoulou.GData.Impl {
             Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent).Wait();
         }
 
-        public IRow<T> Add(T e) {
-            //  TODO : Fix row add
-            /*var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
+        public void Add(T e) {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
 
             object Obj = new {
                 requests = new {
                     appendCells = new {
                         sheetId = this.SheetId,
                         rows = new {
-                            values = new {
-                                userEnteredValue = new {
-                                    stringValue = "Test"
-                                },
-                            }
+                            values = ColumnNames.Select(C => new { userEnteredValue = new { stringValue = e.GetType().GetProperty(C.ToString())?.GetValue(e)?.ToString() } })
                         },
                         fields = "*"
                     }
                 }
             };
 
-            foreach(var test in Element.GetType().GetProperties()) {
-                var testing = test.GetValue(Element);
-            }
-
             var Content = JsonConvert.SerializeObject(Obj);
             var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
             var Request = Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent);
             Request.Wait();
-            var Result = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result);*/
-
-            return null;
+            var Result = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result);
         }
 
         public IRow<T> Get(int RowNumber) {
@@ -132,15 +132,8 @@ namespace Zoulou.GData.Impl {
         }
 
         public IList<IRow<T>> Find(Query q) {
-            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + "/values/" + SheetName;
-
-            var Request = Client.RequestFactory.GetHttpClient().GetAsync(Uri);
-            Request.Wait();
-
-            var ValueRange = Client.RequestFactory.SheetsService.DeserializeResponse<ValueRange>(Request.Result).Result.Values;
-
             var Result = new List<IRow<T>>();
-            List<Dictionary<string, object>> Rows = NameValueRange(ValueRange);
+            List<Dictionary<string, object>> Rows = this.Values;
 
             if(q.Id != null)
                 Rows = Rows.Where(D => D["Id"].ToString() == q.Id).ToList();
@@ -151,22 +144,21 @@ namespace Zoulou.GData.Impl {
             }
 
             foreach(var Row in Rows) {
-                Result.Add(new Row<T>(Client, this.SpreadsheetId, SheetId, Rows.IndexOf(Row)+1) { Element = (T)Activator.CreateInstance(typeof(T), Row) });
+                Result.Add(new Row<T>(Client, this.SpreadsheetId, SheetId, Rows.IndexOf(Row)+1, this.ColumnNames) { Element = (T)Activator.CreateInstance(typeof(T), Row) });
             }
 
             return Result;
         }
 
-        private List<Dictionary<string, object>> NameValueRange(IList<IList<object>> ValueRange) {
+        private List<Dictionary<string, object>> NameValueRange(IList<IList<object>> Values) {
             List<Dictionary<string, object>> Rows = new List<Dictionary<string, object>>();
-            IList<object> ColumnNames = ValueRange.First();
 
-            foreach(var Range in ValueRange.Skip(1)) {
+            foreach(var Row in Values) {
                 Dictionary<string, object> Cells = new Dictionary<string, object>();
                 int i = 0;
 
-                foreach(var Value in Range) {
-                    Cells.Add(ColumnNames.ElementAt(i).ToString(), Value);
+                foreach(var Cell in Row) {
+                    Cells.Add(this.ColumnNames.ElementAt(i).ToString(), Cell);
                     i++;
                 }
 
