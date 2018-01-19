@@ -10,7 +10,7 @@ using Zoulou.GData.Impl;
 using Zoulou.GData.Interfaces;
 
 namespace Zoulou.GData.Models {
-    public class DatabaseClient : IDatabaseClient {
+    public class DatabaseClient {
         public readonly GDataDBRequestFactory RequestFactory;
 
         public DatabaseClient(string ServiceAccountEmail, string ServiceAccountCredentialFilePath) {
@@ -22,7 +22,7 @@ namespace Zoulou.GData.Models {
             RequestFactory = new GDataDBRequestFactory(ServiceAccountEmail, ServiceAccountCredentialFilePath);
         }
 
-        public IDatabase CreateDatabase(string SpreadsheetName) {
+        public Database CreateDatabase(string SpreadsheetName) {
             var Uri = "https://sheets.googleapis.com/v4/spreadsheets/";
 
             object Obj = new { properties = new {
@@ -42,7 +42,7 @@ namespace Zoulou.GData.Models {
             return new Database(this, SpreadsheetId);
         }
 
-        public IDatabase GetDatabase(string SpreadsheetName) {
+        public Database GetDatabase(string SpreadsheetName) {
             //  TODO : Use SheetsService DeserializeResponse
             var Uri = "https://www.googleapis.com/drive/v3/files?q=mimeType%3D'application%2Fvnd.google-apps.spreadsheet'";
 

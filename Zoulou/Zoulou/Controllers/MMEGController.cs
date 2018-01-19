@@ -15,8 +15,6 @@ using Zoulou.GData.Interfaces;
 
 namespace Zoulou.Controllers {
     public class MMEGController : BaseController {
-        private DatabaseClient db = new DatabaseClient("dataentity@formal-fragment-189316.iam.gserviceaccount.com", HttpRuntime.AppDomainAppPath + "Key.json");
-            //.GetDatabase("1-dg6TbHNRoptK96CvXAa3ULlkKC8H_pOHz1QT0unNTo");
         //[ValidateInput(false)]
         //[OutputCache(CacheProfile = "ZoulouCache")]
         public ActionResult Index() {
@@ -30,29 +28,19 @@ namespace Zoulou.Controllers {
         public ActionResult Creatures(CreatureViewModel CreatureViewModel) {
             if(CreatureViewModel.Creatures == null) {
                 var CreatureRepository = new CreatureRepository();
-                //CreatureViewModel.Creatures = CreatureRepository.getCreatures();
-                var showetienne = CreatureRepository.getCreatures();
-                //db.GetDatabase("MMEG").CreateTable("Testering");
-                //db.CreateDatabase("Testering");
-                //db.GetDatabase("Testering")?.Delete();
-
-                if(String.IsNullOrEmpty(CreatureViewModel.SortOrder)) {
-                    CreatureViewModel.SortOrder = "Name" + Thread.CurrentThread.CurrentCulture.ToString();
-                }
+                CreatureViewModel.Creatures = CreatureRepository.GetCreatures();
             }
 
             var SortElements = CreatureViewModel.Elements.Where(E => E.Value == true).Select(E => E.Key).ToArray();
             var SortRoles = CreatureViewModel.Roles.Where(R => R.Value == true).Select(R => R.Key).ToArray();
 
-            /*CreatureViewModel.CreaturesFiltered = CreatureViewModel.Creatures
-                .Where(C => C.EvolutionId == 0)
-                .Where(C => SortElements.Contains(C.Element.Id.ToString()))
-                .Where(C => SortRoles.Contains(C.Role.Id.ToString()))
-                .OrderBy(CreatureViewModel.SortOrder + " desc")
-                .ToList();*/
+            CreatureViewModel.CreaturesFiltered = CreatureViewModel.Creatures
+                .Where(C => C.Element.EvolutionId == 0)
+                .Where(C => SortElements.Contains(C.Element.Element.Id.ToString()))
+                .Where(C => SortRoles.Contains(C.Element.Role.Id.ToString()))
+                .ToList();
 
-            //return View(CreatureViewModel);
-            return RedirectToAction("Index");
+            return View(CreatureViewModel);
         }
 
         [Route("MMEG/Creature/{species}/{stage}/{element}")]
@@ -63,10 +51,10 @@ namespace Zoulou.Controllers {
                 && ConvertHelper.IsOfTypeCode(this.ControllerContext.RouteData.Values["element"], TypeCode.Int32)) {
                 if(CreatureViewModel.Creatures == null) {
                     var CreatureRepository = new CreatureRepository();
-                    //CreatureViewModel.Creatures = CreatureRepository.getCreatures();
+                    CreatureViewModel.Creatures = CreatureRepository.GetCreatures();
                 }
 
-                foreach(var Creature in CreatureViewModel.Creatures) {
+                foreach(var Creature in CreatureViewModel.Creatures.Select(C => C.Element)) {
                     if(Creature.SpeciesId == Convert.ToInt32(this.ControllerContext.RouteData.Values["species"])
                         && Creature.EvolutionStage == Convert.ToInt32(this.ControllerContext.RouteData.Values["stage"])
                         && Creature.Element.Id == Convert.ToInt32(this.ControllerContext.RouteData.Values["element"])) {

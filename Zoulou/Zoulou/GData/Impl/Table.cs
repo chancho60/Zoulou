@@ -71,7 +71,35 @@ namespace Zoulou.GData.Impl {
         }
 
         public IRow<T> Add(T e) {
-            //  TODO : Find how to add row.
+            //  TODO : Fix row add
+            /*var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
+
+            object Obj = new {
+                requests = new {
+                    appendCells = new {
+                        sheetId = this.SheetId,
+                        rows = new {
+                            values = new {
+                                userEnteredValue = new {
+                                    stringValue = "Test"
+                                },
+                            }
+                        },
+                        fields = "*"
+                    }
+                }
+            };
+
+            foreach(var test in Element.GetType().GetProperties()) {
+                var testing = test.GetValue(Element);
+            }
+
+            var Content = JsonConvert.SerializeObject(Obj);
+            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
+            var Request = Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent);
+            Request.Wait();
+            var Result = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result);*/
+
             return null;
         }
 
@@ -97,6 +125,12 @@ namespace Zoulou.GData.Impl {
             });
         }
 
+        public IRow<T> FindById(string Id) {
+            return Find(new Query {
+                Id = Id,
+            }).FirstOrDefault();
+        }
+
         public IList<IRow<T>> Find(Query q) {
             var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + "/values/" + SheetName;
 
@@ -106,8 +140,10 @@ namespace Zoulou.GData.Impl {
             var ValueRange = Client.RequestFactory.SheetsService.DeserializeResponse<ValueRange>(Request.Result).Result.Values;
 
             var Result = new List<IRow<T>>();
-            IList<IList<object>> Rows = ValueRange.Skip(1).ToList();
+            List<Dictionary<string, object>> Rows = NameValueRange(ValueRange);
 
+            if(q.Id != null)
+                Rows = Rows.Where(D => D["Id"].ToString() == q.Id).ToList();
             if(q.Start > 0)
                 Rows = Rows.Skip(q.Start).ToList();
             if(q.Count > 0) {
@@ -119,6 +155,25 @@ namespace Zoulou.GData.Impl {
             }
 
             return Result;
+        }
+
+        private List<Dictionary<string, object>> NameValueRange(IList<IList<object>> ValueRange) {
+            List<Dictionary<string, object>> Rows = new List<Dictionary<string, object>>();
+            IList<object> ColumnNames = ValueRange.First();
+
+            foreach(var Range in ValueRange.Skip(1)) {
+                Dictionary<string, object> Cells = new Dictionary<string, object>();
+                int i = 0;
+
+                foreach(var Value in Range) {
+                    Cells.Add(ColumnNames.ElementAt(i).ToString(), Value);
+                    i++;
+                }
+
+                Rows.Add(Cells);
+            }
+
+            return Rows;
         }
     }
 }

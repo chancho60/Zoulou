@@ -14,9 +14,9 @@ namespace Zoulou.Repositories {
         protected DatabaseClient DatabaseClient;
         protected IDatabase Database;
 
-        public BaseRepository(string Id) {
+        public BaseRepository(string SpreadsheetName) {
             DatabaseClient = new DatabaseClient("dataentity@formal-fragment-189316.iam.gserviceaccount.com", HttpRuntime.AppDomainAppPath + "Key.json");
-            Database = DatabaseClient.GetDatabase(Id);
+            Database = DatabaseClient.GetDatabase(SpreadsheetName);
         }
     }
 }

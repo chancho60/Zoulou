@@ -18,7 +18,6 @@ namespace Zoulou.GData.Impl {
         public readonly int? SheetId;
         public readonly int RowId;
 
-        //public Row(DatabaseClient client, string etag, Uri id, Uri edit, ) {
         public Row(DatabaseClient Client, string SpreadsheetId, int? SheetId, int RowId) {
             this.Client = Client;
             this.SpreadsheetId = SpreadsheetId;
@@ -57,18 +56,6 @@ namespace Zoulou.GData.Impl {
             var Content = JsonConvert.SerializeObject(Obj);
             var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
             var Request = Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent);
-            Request.Wait();
-            var Result = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result);*/
-
-            /*var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + "/values/Creature!A1";
-
-            object Obj = new {
-                values = Client.RequestFactory.SheetsService.SerializeObject(Element)
-            };
-
-            var Content = JsonConvert.SerializeObject(Obj);
-            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
-            var Request = Client.RequestFactory.GetHttpClient().PutAsync(Uri, HttpContent);
             Request.Wait();
             var Result = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result);*/
         }

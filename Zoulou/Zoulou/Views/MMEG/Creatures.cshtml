@@ -73,7 +73,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var Creature in Model.CreaturesFiltered) {
+                @foreach(var Creature in Model.CreaturesFiltered.Select(C => C.Element)) {
                     <tr class="@Creature.Element.Name @Creature.Role.Name">
                         <td>
                             <div class="portrait @Creature.Element.Name.ToLower()">
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                             <p>
-                                <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Creature.SpeciesId, stage = Creature.EvolutionStage, element = Creature.Element.Id })">@Creature.NameEn</a>
+                                <a href="@Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Creature.SpeciesId, stage = Creature.EvolutionStage, element = Creature.Id })">@Creature.NameEn</a>
                             </p>
                         </td>
                         <td>@Creature.BaseRank</td>
