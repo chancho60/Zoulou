@@ -1,29 +1,23 @@
-﻿<div class="navbar">
+﻿<link href="/Content/Css/pkm.css" rel="stylesheet">
+<div class="navbar">
     <div class="container" style="padding: 0px 15px;">
         <div class="navbar-header">
-            <div class="game-logo pkm">
-                <a href="/En/PKM">
-                    <div class="crop" style="width: 60px; height: 55px;">
+            <div class="cstm-button pkm small">
+                <a href="@Url.Action("Index", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">
+                    <div class="crop">
                         <img src="/Content/Images/PKM.png" alt="PKM" />
                     </div>
                 </a>
             </div>
         </div>
-        <form id="searchform" role="search" method="get" action="" class="navbar-form navbar-right searchform">
-            <div class="input-group widget-search">
-                <input type="text" class="form-control" placeholder="Search">
-                <div class="input-group-btn">
-                    <button class="btn btn-secondary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                </div>
-            </div>
-        </form>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                @Html.MenuItem("Pokemons", "Pokemons", "PKM")
-                @Html.MenuItem("Tier List", "TierList", "PKM")
-                @Html.MenuItem("Abilities", "Abilities", "PKM")
-                @Html.MenuItem("Items", "Items", "PKM")
-                @Html.MenuItem("Type Chart", "TypeChart", "PKM")
+                <li>
+                    <a href="@Url.Action("Pokemons", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Pokemons</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("TypeChart", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Type Chart</a>
+                </li>
             </ul>
         </div>
     </div>

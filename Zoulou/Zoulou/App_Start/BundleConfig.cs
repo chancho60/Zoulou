@@ -24,7 +24,6 @@ namespace Zoulou
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Css/bootstrap.css",
                       "~/Content/Css/site.css",
-                      "~/Content/Css/pkm.css",
                       "~/Content/Css/rpg-awesome.css"));
         }
     }

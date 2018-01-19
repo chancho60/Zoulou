@@ -1,55 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web;
+using System.Net.Http;
+using System.Text;
 using System.Xml.Linq;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v2;
-using Google.Apis.Services;
-using Google.Apis.Sheets.v4;
+using Google.Apis.Sheets.v4.Data;
+using Newtonsoft.Json;
 using Zoulou.GData.Interfaces;
 using Zoulou.GData.Models;
 
 namespace Zoulou.GData.Impl {
     public class Database : IDatabase {
-        private readonly string Id;
         private readonly DatabaseClient Client;
-        private readonly GoogleCredential Credential;
-        protected static string[] Scopes = new[] {
-            DriveService.Scope.Drive,
-            DriveService.Scope.DriveFile,
-            SheetsService.Scope.Spreadsheets,
-        };
-        private readonly DriveService DriveService;
-        private readonly SheetsService SheetsService;
+        private readonly string SpreadsheetId;
 
-        public Database(DatabaseClient Client, string Id) {
-            this.Id = Id;
+        public Database(DatabaseClient Client, string SpreadsheetId) {
             this.Client = Client;
-            this.Credential = GoogleCredential.FromFile(HttpRuntime.AppDomainAppPath + "Key.json").CreateScoped(Scopes);
+            this.SpreadsheetId = SpreadsheetId;
+        }
+        
+        public ITable<T> CreateTable<T>(string SheetName) where T : new() {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
 
-            this.DriveService = new DriveService(new BaseClientService.Initializer {
-                HttpClientInitializer = this.Credential,
-                ApplicationName = "Zoulou"
-            });
+            object Obj = new {
+                requests = new {
+                    addSheet = new {
+                        properties = new {
+                            title = SheetName
+                        }
+                    }
+                }
+            };
 
-            this.SheetsService = new SheetsService(new BaseClientService.Initializer {
-                HttpClientInitializer = this.Credential,
-                ApplicationName = "Zoulou"
-            });
+            var Content = JsonConvert.SerializeObject(Obj);
+            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
+            var Request = Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent);
+            Request.Wait();
+
+            var SheetId = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result).Result.Replies[0].AddSheet.Properties.SheetId;
+            if(SheetId == null)
+                return null;
+
+            return new Table<T>(Client, SpreadsheetId, SheetId, SheetName);
         }
 
-        public ITable<T> CreateTable<T>(string Name) where T : new() {
-            return new Table<T>(Client, SheetsService.Spreadsheets, Id, Name);
-        }
+        public ITable<T> GetTable<T>(string SheetName) where T : new() {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId;
 
-        public ITable<T> GetTable<T>(string Name) where T : new() {
-            return new Table<T>(Client, SheetsService.Spreadsheets, Id, Name);
+            var Request = Client.RequestFactory.GetHttpClient().GetAsync(Uri);
+            Request.Wait();
 
+            var SheetId = Client.RequestFactory.SheetsService.DeserializeResponse<Spreadsheet>(Request.Result).Result.Sheets.Where(S => S.Properties.Title == SheetName).Select(S => S.Properties.SheetId).FirstOrDefault();
+            if(SheetId == null)
+                return null;
+
+            return new Table<T>(Client, SpreadsheetId, SheetId, SheetName);
         }
 
         public void Delete() {
+            var Uri = "https://www.googleapis.com/drive/v3/files/" + this.SpreadsheetId + "?q=mimeType%3D'application%2Fvnd.google-apps.spreadsheet'";
+            Client.RequestFactory.GetHttpClient().DeleteAsync(Uri).Wait();
         }
     }
 }

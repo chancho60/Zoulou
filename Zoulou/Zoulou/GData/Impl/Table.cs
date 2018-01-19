@@ -1,59 +1,112 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
-using System.Xml.Linq;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
+using Newtonsoft.Json;
 using Zoulou.GData.Interfaces;
 using Zoulou.GData.Models;
 
 namespace Zoulou.GData.Impl {
     public class Table<T> : ITable<T> where T : new() {
         private readonly DatabaseClient Client;
-        private readonly SpreadsheetsResource SpreadSheet;
         private readonly string SpreadsheetId;
-        private readonly string SpreadsheetRange;
+        private readonly int? SheetId;
+        private readonly string SheetName;
+        private readonly IList<object> ColumnNames;
+        private readonly List<Dictionary<string, object>> Values;
 
-        public Table(DatabaseClient Client, SpreadsheetsResource SpreadSheet, string SpreadsheetId, string SpreadsheetRange) {
+        public Table(DatabaseClient Client, string SpreadsheetId, int? SheetId, string SheetName) {
             if(Client == null)
                 throw new ArgumentNullException("Client");
-            if(SpreadSheet == null)
-                throw new ArgumentNullException("SpreadSheet");
             if(SpreadsheetId == null)
                 throw new ArgumentNullException("SpreadsheetId");
-            if(SpreadsheetRange == null)
-                throw new ArgumentNullException("SpreadsheetRange");
+            if(SheetId == null)
+                throw new ArgumentNullException("SheetId");
+            if(SheetName == null)
+                throw new ArgumentNullException("SheetName");
 
             this.Client = Client;
-            this.SpreadSheet = SpreadSheet;
             this.SpreadsheetId = SpreadsheetId;
-            this.SpreadsheetRange = SpreadsheetRange;
+            this.SheetId = SheetId;
+            this.SheetName = SheetName;
+
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + "/values/" + SheetName;
+
+            var Request = Client.RequestFactory.GetHttpClient().GetAsync(Uri);
+            Request.Wait();
+            var Response = Client.RequestFactory.SheetsService.DeserializeResponse<ValueRange>(Request.Result).Result.Values;
+
+            this.ColumnNames = Response.First();
+            this.Values = NameValueRange(Response.Skip(1).ToList());
         }
 
         public void Delete() {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
+
+            object Obj = new {
+                requests = new {
+                    deleteSheet = new {
+                        sheetId = this.SheetId
+                    }
+                }
+            };
+
+            var Content = JsonConvert.SerializeObject(Obj);
+            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
+            Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent).Wait();
         }
 
         public void Clear() {
-            var Body = new ClearValuesRequest();
-            SpreadSheet.Values.Clear(Body, SpreadsheetId, SpreadsheetRange).Execute();
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + "/values/" + SheetName + ":clear";
+            Client.RequestFactory.GetHttpClient().PostAsync(Uri, null).Wait();
         }
 
-        public void Rename(string Name) {
+        public void Rename(string SheetName) {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
+
+            object Obj = new {
+                updateSheetProperties = new {
+                    properties = new {
+                        sheetId = this.SheetId,
+                        title = SheetName
+                    }
+                }
+            };
+
+            var Content = JsonConvert.SerializeObject(Obj);
+            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
+            Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent).Wait();
         }
 
-        public IRow<T> Add(T e) {
-            var Body = new ValueRange();
-            //Body.Values.Add();
-            SpreadSheet.Values.Append(Body, SpreadsheetId, SpreadsheetRange).Execute();
+        public void Add(T e) {
+            var Uri = "https://sheets.googleapis.com/v4/spreadsheets/" + this.SpreadsheetId + ":batchUpdate";
 
-            return new Row<T>("test");
+            object Obj = new {
+                requests = new {
+                    appendCells = new {
+                        sheetId = this.SheetId,
+                        rows = new {
+                            values = ColumnNames.Select(C => new { userEnteredValue = new { stringValue = e.GetType().GetProperty(C.ToString())?.GetValue(e)?.ToString() } })
+                        },
+                        fields = "*"
+                    }
+                }
+            };
+
+            var Content = JsonConvert.SerializeObject(Obj);
+            var HttpContent = new StringContent(Content, Encoding.UTF8, "application/json");
+            var Request = Client.RequestFactory.GetHttpClient().PostAsync(Uri, HttpContent);
+            Request.Wait();
+            var Result = Client.RequestFactory.SheetsService.DeserializeResponse<BatchUpdateSpreadsheetResponse>(Request.Result);
         }
 
-        public IRow<T> Get(int rowNumber) {
+        public IRow<T> Get(int RowNumber) {
             var q = new Query {
+                Start = RowNumber,
                 Count = 1,
-                Start = rowNumber,
             };
             var results = Find(q);
             if(results.Count == 0)
@@ -65,60 +118,48 @@ namespace Zoulou.GData.Impl {
             return Find(new Query());
         }
 
-        public IList<IRow<T>> FindAll(int start, int count) {
+        public IList<IRow<T>> FindAll(int Start, int Count) {
             return Find(new Query {
-                Start = start,
-                Count = count,
+                Start = Start,
+                Count = Count,
             });
-        }
-
-        public IList<IRow<T>> Find(string query) {
-            return Find(new Query { FreeQuery = query });
-        }
-
-        public IList<IRow<T>> FindStructured(string query) {
-            return Find(new Query { StructuredQuery = query });
-        }
-
-        public IList<IRow<T>> FindStructured(string query, int start, int count) {
-            return Find(new Query {
-                StructuredQuery = query,
-                Start = start,
-                Count = count,
-            });
-        }
-
-
-        public static string SerializeQuery(Query q) {
-            var b = new StringBuilder();
-
-            if(q.FreeQuery != null)
-                b.Append("q=" + Utils.UrlEncode(q.FreeQuery) + "&");
-            if(q.StructuredQuery != null)
-                b.Append("sq=" + Utils.UrlEncode(q.StructuredQuery) + "&");
-            if(q.Start > 0)
-                b.Append("start-index=" + q.Start + "&");
-            if(q.Count > 0)
-                b.Append("max-results=" + q.Count + "&");
-            if(q.Order != null) {
-                if(q.Order.ColumnName != null)
-                    b.Append("orderby=column:" + Utils.UrlEncode(q.Order.ColumnName) + "&");
-                if(q.Order.Descending)
-                    b.Append("reverse=true&");
-            }
-
-            return b.ToString();
         }
 
         public IList<IRow<T>> Find(Query q) {
             var Result = new List<IRow<T>>();
-            ValueRange Response = SpreadSheet.Values.Get(SpreadsheetId, SpreadsheetRange).Execute();
+            List<Dictionary<string, object>> Rows = this.Values;
 
-            foreach(var Row in Response.Values) {
-                Result.Add(new Row<T>(Row[0].ToString()) { Element = (T)Activator.CreateInstance(typeof(T), Row) });
+            if(q.Id != null)
+                Rows = Rows.Where(D => D["Id"].ToString() == q.Id).ToList();
+            if(q.Start > 0)
+                Rows = Rows.Skip(q.Start).ToList();
+            if(q.Count > 0) {
+                Rows = Rows.Take(q.Count).ToList();
+            }
+
+            foreach(var Row in Rows) {
+                Result.Add(new Row<T>(Client, this.SpreadsheetId, SheetId, Rows.IndexOf(Row)+1, this.ColumnNames) { Element = (T)Activator.CreateInstance(typeof(T), Row) });
             }
 
             return Result;
+        }
+
+        private List<Dictionary<string, object>> NameValueRange(IList<IList<object>> Values) {
+            List<Dictionary<string, object>> Rows = new List<Dictionary<string, object>>();
+
+            foreach(var Row in Values) {
+                Dictionary<string, object> Cells = new Dictionary<string, object>();
+                int i = 0;
+
+                foreach(var Cell in Row) {
+                    Cells.Add(this.ColumnNames.ElementAt(i).ToString(), Cell);
+                    i++;
+                }
+
+                Rows.Add(Cells);
+            }
+
+            return Rows;
         }
     }
 }

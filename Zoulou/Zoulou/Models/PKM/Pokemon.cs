@@ -12,7 +12,7 @@ namespace Zoulou.Models.PKM {
         private Guid _GameId;
 
         private Int16 _Number;
-        private TypeRepository _Types;
+        //private TypeRepository _Types;
         //Repository of Moves
         //Repository of Abilities
     }

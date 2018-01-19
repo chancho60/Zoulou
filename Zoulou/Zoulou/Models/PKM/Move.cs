@@ -11,7 +11,7 @@ namespace Zoulou.Models.PKM {
         private Guid _DefinitionId;
         private Guid _GameId;
 
-        private TypeRepository _Types;
+        //private TypeRepository _Types;
         private Byte _Power;
         private Byte _PP;
         private String _DamageType; //Status, Special or Physical

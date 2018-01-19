@@ -9,28 +9,29 @@ namespace Zoulou.Controllers {
             return View();
         }
 
-        public ActionResult TypeChart(TypeChartViewModel typeChart) {
-
-            TypeRepository allTypes = new TypeRepository();
-            //var matchups = allTypes.GetTypeMatchups();  
+        public ActionResult TypeChart() {
+            TypeChartViewModel typeChart = new TypeChartViewModel();
+            TypeMatchupRepository repository = new TypeMatchupRepository();
 
             //get all TypeMatchups
             typeChart.TypeMatchups = new Dictionary<String, Dictionary<String, Double>>();
 
-            foreach (var matchup in allTypes.GetTypeMatchups()) {
+            foreach (var matchup in repository.GetTypeMatchups()) {
+                //declare var
+                var atkType = Enum.GetName(typeof(Types), matchup.AttackingType);
+                var defType = Enum.GetName(typeof(Types), matchup.DefendingType);
+
                 //add key if doesn't exist
-                if ( !typeChart.TypeMatchups.ContainsKey( Enum.GetName(typeof(Types), matchup.AttackingTypeId) ) ) {
-                    typeChart.TypeMatchups.Add(
-                        //position (Attk Type Name)
-                        Enum.GetName(typeof(Types), matchup.AttackingTypeId),
-                        //Value (Dict<Def Type Name, Modifer>)
-                        new Dictionary<String, Double>() { { Enum.GetName(typeof(Types), matchup.AttackingTypeId), matchup.Modifier } }
-                    );
+                if (!typeChart.TypeMatchups.ContainsKey(atkType)) {
+                    typeChart.TypeMatchups.Add(atkType, new Dictionary<String, Double>());
                 }
+
+                //add matchup
+                typeChart.TypeMatchups[atkType].Add(defType, matchup.Modifier);
             }
 
             //Get all types as String
-            typeChart.allTypes = new List<String>( Enum.GetNames(typeof(Types)) );
+            typeChart.allTypes = new List<string>( Enum.GetNames(typeof(Types)) );
 
             ViewBag.TypeChart = typeChart;
 

@@ -5,30 +5,50 @@
 **************************/
 
 body {
-    background-image: url('../Images/boxes.svg');
+    background-image: url('../Images/pattern_PKM.jpg');
 }
 
-#bozes{
-    fill:gray;
+body, .navbar-nav > li > a, .copyright {
+    color: #b29600;
+}
+
+footer {
+    border-top-color: #b29600;
 }
 
 .navbar {
-    background: black;
+    border-bottom-color: #b29600;
 }
 
-.container-fluid {
-    background: black;
+.container {
+    color: sienna;
 }
 
-.copyright {
-    background: black !important;
+.container-fluid, .navbar, .copyright {
+    background: #2D0005 !important;
 }
 
+.navbar-nav > li > .dropdown-menu {
+    background: #42191d;
+    color: #b29600;
+}
+
+.nav > li > .dropdown-menu > .glyphicon {
+    color: #42191d;
+}
+
+.navbar-nav > li > .dropdown-menu > li > a {
+    color: #b29600;
+}
+
+.navbar-nav > li > .dropdown-menu > li > a:hover {
+    background: #563236;
+    color: #b29600;
+}
 
 /**************************
     Type Chart
 **************************/
-
 #typechart {
     color: black;
     background-color: #a5d6d7;

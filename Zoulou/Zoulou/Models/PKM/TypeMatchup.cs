@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.WebPages;
 
 namespace Zoulou.Models.PKM {
     class TypeMatchup {
         public Guid Id;
-        public int AttackingTypeId;
-        public String AttackingType;
-        public int DefendingTypeId;
-        public String DefendingType;
+        public Int32 AttackingType;
+        public Int32 DefendingType;
         public Double Modifier;
 
-        public TypeMatchup() {
-
+        public TypeMatchup(Dictionary<string, object> NamedRange) {
+            Id = Guid.Parse(NamedRange["Id"].ToString());
+            AttackingType = NamedRange["AtkType"].ToString().AsInt();
+            DefendingType = NamedRange["DefType"].ToString().AsInt();
+            Modifier = Double.Parse(NamedRange["Modifier"].ToString());
         }
 
-        public TypeMatchup(IList<object> Data) {
-            
-            Id = Guid.Parse(Data[0].ToString());
-            AttackingTypeId = Int32.Parse(Data[1].ToString());
-            DefendingTypeId = Int32.Parse(Data[2].ToString());
-            Modifier = Double.Parse(Data[3].ToString());
+        public TypeMatchup() {
         }
     }
 }
