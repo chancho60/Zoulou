@@ -1,33 +1,33 @@
-﻿@model Zoulou.Models.MMEG.GlyphViewModel
+﻿@model Zoulou.ViewModels.MMEG.GlyphViewModel
 @{
     ViewBag.Title = "MMEG - Glyphs";
 }
 <div class="row">
     <div class="col-md-12">
-        <table class="boxed">
+        <table class="cstm-table">
             <thead>
                 <tr>
-                    <th class="boxed-gray">Rarity</th>
+                    <th>Rarity</th>
                     @foreach(var Rarity in Model.AvailableRarities) {
-                        <th class="boxed-@Rarity.RarityName.ToLower()" colspan="4">@Rarity.RarityName</th>
+                        <th colspan="4">@Rarity.ToString()</th>
                     }
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="boxed-gray">Stats / Level</td>
+                    <td>Stats / Level</td>
                     @foreach(var Rarity in Model.AvailableRarities) {
                         for(var i = 7; i <= 16; i += 3) {
-                            <td class="boxed-@Rarity.RarityName.ToLower()">@i.ToString()</td>
+                            <td>@i.ToString()</td>
                         }
                     }
                 </tr>
-                @foreach(var Stat in Model.AvailableStats) {
+                @foreach(var Stat in Model.GetAvailableStats()) {
                     <tr>
-                        <td class="boxed-gray">@Stat.StatName @Stat.StatModifier</td>
+                        <td>@Stat.Name @Stat.Modifier</td>
                         @foreach(var Rarity in Model.AvailableRarities) {
                             for(var i = 7; i <= 16; i += 3) {
-                                <td class="boxed-@Rarity.RarityName.ToLower()">@Model.CalculateStat(Stat.StatName, Rarity.RarityName, Stat.StatModifier, i)</td>
+                                <td>@Model.CalculateStat(Stat.Name, Rarity.ToString(), Stat.Modifier, i)</td>
                             }
                         }
                     </tr>
@@ -35,9 +35,9 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th class="boxed-gray">Rarity</th>
+                    <th>Rarity</th>
                     @foreach(var Rarity in Model.AvailableRarities) {
-                        <th class="boxed-@Rarity.RarityName.ToLower()" colspan="4">@Rarity.RarityName</th>
+                        <th colspan="4">@Rarity.ToString()</th>
                     }
                 </tr>
             </tfoot>

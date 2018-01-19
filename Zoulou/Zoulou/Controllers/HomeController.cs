@@ -11,13 +11,8 @@ using Zoulou.Models.MMEG;
 
 namespace Zoulou.Controllers {
     public class HomeController : BaseController {
-        public async Task<ActionResult> Index() {
-            CancellationToken cToken = new CancellationToken();
-            
-            return await IndexAsync(cToken);
-        }
+        public ActionResult Index() {
 
-        public async Task<ActionResult> IndexAsync(CancellationToken cancellationToken) {
             return View();
         }
     }

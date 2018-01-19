@@ -10,25 +10,34 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar">
+    <nav class="navbar">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/En/Home"><img class="logo" src="/Content/Images/Feather.svg" alt="Zoulou" />Zoulou</a>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })"><img class="logo" src="/Content/Images/Feather.svg" alt="Zoulou" />Zoulou</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @Html.MenuItem("Might & Magic", "Index", "MMEG")
-                    @Html.MenuItem("Fire Emblem", "Index", "FEH")
-                    @Html.MenuItem("Pokemon", "Index", "PKM")
-                </ul>
-            </div>
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Might & Magic</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "FEH", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Fire Emblem</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Pokemon</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle nav-item" data-toggle="dropdown" href="#">Language</a>
+                    <ul class="dropdown-menu">
+                        <li class="glyphicon glyphicon-triangle-top" aria-hidden="true"></li>
+                        <li><a href="@(Url.RouteCultureUrl(this.ViewContext.RouteData.Values, "en"))" hreflang="en" rel="alternate">English</a></li>
+                        <li><a href="@(Url.RouteCultureUrl(this.ViewContext.RouteData.Values, "fr"))" hreflang="fr" rel="alternate">Français</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-    </div>
+    </nav>
     @RenderPage("~/Views/" + this.ViewContext.RouteData.Values["controller"].ToString() + "/Navbar.cshtml")
     <div class="container-fluid body-content">
         <div class="container">
@@ -40,7 +49,6 @@
             <p>&copy; @DateTime.Now.Year - Zoulou</p>
         </div>
     </footer>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

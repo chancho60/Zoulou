@@ -1,8 +1,8 @@
 ﻿<div class="navbar">
     <div class="container" style="padding: 0px 15px;">
         <div class="navbar-header">
-            <div class="game-button zoulou small">
-                <a href="/En/Home">
+            <div class="cstm-button zoulou small">
+                <a href="@Url.Action("Index", "Home", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">
                     <div class="crop">
                         <img src="/Content/Images/Feather.svg" alt="MMEG" />
                     </div>
@@ -11,9 +11,15 @@
         </div>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                @Html.MenuItem("Support Us", "Support", "Support")
-                @Html.MenuItem("Reviews", "Reviews", "Review")
-                @Html.MenuItem("Updates", "Updates", "Update")
+                <li>
+                    <a href="@Url.Action("Support", "Support", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Support Us</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Reviews", "Review", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Reviews</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Updates", "Update", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })" hreflang="en" rel="alternate">Updates</a>
+                </li>
             </ul>
         </div>
     </div>

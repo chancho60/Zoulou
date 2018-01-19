@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace Zoulou.Helpers {
@@ -12,7 +13,7 @@ namespace Zoulou.Helpers {
                 ListItem.AddCssClass("current");
             }
 
-            Link.Attributes.Add("href", "/" + HtmlHelper.ViewContext.RouteData.Values["lang"].ToString() + "/" + Controller + "/" + Action);
+            Link.Attributes.Add("href", "/" + Thread.CurrentThread.CurrentCulture.ToString() + "/" + Controller + "/" + Action);
             Link.InnerHtml = Text;
             ListItem.InnerHtml = Link.ToString();
 
