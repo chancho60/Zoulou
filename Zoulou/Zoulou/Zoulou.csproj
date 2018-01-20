@@ -244,6 +244,7 @@
     <Compile Include="Models\MMEG\Element.cs" />
     <Compile Include="Repositories\MMEG\GlyphRepository.cs" />
     <Compile Include="Repositories\MMEG\SkillRepository.cs" />
+    <Compile Include="Repositories\PKM\PokemonRepository.cs" />
     <Compile Include="ViewModels\MMEG\CreatureViewModel.cs" />
     <Compile Include="ViewModels\MMEG\GlyphViewModel.cs" />
     <Compile Include="Models\MMEG\Rarity.cs" />
@@ -261,6 +262,8 @@
     <Compile Include="Models\PKM\Move.cs" />
     <Compile Include="Models\PKM\Pokemon.cs" />
     <Compile Include="Models\PKM\Type.cs" />
+    <Compile Include="ViewModels\PKM\PokemonSearchViewModel.cs" />
+    <Compile Include="ViewModels\PKM\PokemonViewModel.cs" />
     <Compile Include="ViewModels\PKM\TypeChartViewModel.cs" />
     <Compile Include="Models\PKM\TypeMatchup.cs" />
     <Compile Include="Repositories\PKM\TypeMatchupRepository.cs" />

@@ -1,17 +1,16 @@
-﻿@{
+﻿@model Zoulou.ViewModels.PKM.TypeChartViewModel
+@{
     ViewBag.Title = "PKM";
 }
 <div class="row">
     <div class="col-md-12">
         <div class="text-center">
             <h1>Type Chart</h1>
-
-            <br/>
-
+            <br />
             <table id="typechart">
                 <tr>
                     <td class="corner"></td>
-                    @{ 
+                    @{
                         /**********
                          * Top Row
                          * ********/
@@ -21,7 +20,7 @@
                         }
                     }
                 </tr>
-                @{ 
+                @{
                     /*****************
                     * Left Row + Grid
                     * ***************/
@@ -29,7 +28,6 @@
                     foreach (KeyValuePair<String, Dictionary<String, Double>> typeMatchups in ViewBag.TypeChart.TypeMatchups) {
                         <tr>
                             <td class="@typeMatchups.Key.ToLower()">@typeMatchups.Key.Substring(0, 3)</td>
-
                             @foreach (String typeName in ViewBag.TypeChart.allTypes) {
                                 var className = "";
                                 var modifier = "";
@@ -50,7 +48,8 @@
 
                                     className += " outlined";
                                     modifier = typeMatchups.Value[typeName].ToString();
-                                } else {
+                                }
+                                else {
                                     modifier = "1";
                                 }
 

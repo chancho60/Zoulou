@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Zoulou.Models.PKM
+namespace Zoulou.ViewModels.PKM
 {
     public class TypeChartViewModel
     {
