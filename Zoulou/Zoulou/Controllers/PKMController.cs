@@ -11,13 +11,22 @@ namespace Zoulou.Controllers {
             return View();
         }
 
-        public ActionResult Pokemon(PokemonSearchViewModel PokemonSearch) {
+        public ActionResult AllPokemon(PokemonSearchViewModel PokemonSearch) {
+            //fill PokemonSearch.AllPokemon
             if (PokemonSearch.AllPokemon == null) {
                 PokemonRepository repository = new PokemonRepository();
                 PokemonSearch.AllPokemon = new List<PokemonViewModel>();
 
                 foreach(var pokemon in repository.GetAllPokemon()) {
-                    PokemonSearch.AllPokemon.Add(new PokemonViewModel() { name = pokemon.name });
+                    PokemonSearch.AllPokemon.Add(new PokemonViewModel() {
+                        Name = pokemon.Name,
+                        HP = pokemon.HP,
+                        ATK = pokemon.Atk,
+                        DEF = pokemon.Def,
+                        SPA = pokemon.SpA,
+                        SPD = pokemon.SpD,
+                        SPE = pokemon.Spe,
+                    });
                 }
             }
 
@@ -31,7 +40,7 @@ namespace Zoulou.Controllers {
                 .ToList();
 
             return View(CreatureViewModel);*/
-            return null;
+            return View(PokemonSearch);
         }
 
         public ActionResult TypeChart(TypeChartViewModel typeChart) {

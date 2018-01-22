@@ -1,0 +1,146 @@
+﻿@model Zoulou.ViewModels.PKM.PokemonSearchViewModel
+@{
+    ViewBag.Title = "PKM - PokemonSearch";
+}
+<!--div class="row">
+    <div class="col-md-12 text-center">
+        <div class="cstm-button filter" onclick="filter(this, 'Fire', 'Element')">
+            <span class="ra ra-flame-symbol"></span>
+        </div>
+        <div class="cstm-button filter" onclick="filter(this, 'Earth', 'Element')">
+            <span class="glyphicon glyphicon-leaf"></span>
+        </div>
+        <div class="cstm-button filter" onclick="filter(this, 'Air', 'Element')">
+            <span class="glyphicon glyphicon-cloud"></span>
+        </div>
+        <div class="cstm-button filter" onclick="filter(this, 'Water', 'Element')">
+            <span class="ra ra-water-drop"></span>
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        <div class="cstm-button filter" onclick="filter(this, 'Attacker', 'Role')" title="Attacker">
+            <span class="ra ra-sword"></span>
+        </div>
+        <div class="cstm-button filter" onclick="filter(this, 'Defender', 'Role')" title="Defender">
+            <span class="ra ra-shield"></span>
+        </div>
+        <div class="cstm-button filter" onclick="filter(this, 'Saboteur', 'Role')" title="Saboteur">
+            <span class="ra ra-hood"></span>
+        </div>
+        <div class="cstm-button filter" onclick="filter(this, 'Support', 'Role')" title="Support">
+            <span class="ra ra-angel-wings"></span>
+        </div>
+    </div>
+</div-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tblCreatures" class="cstm-table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Creature", "Creatures", new { SortOrder = "NameEn" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("HP", "Creatures", new { SortOrder = "HP" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("ATK", "Creatures", new { SortOrder = "ATK" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("DEF", "Creatures", new { SortOrder = "DEF" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("SPA", "Creatures", new { SortOrder = "SPA" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("SPD", "Creatures", new { SortOrder = "SPD" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("SPE", "Creatures", new { SortOrder = "SPE" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Total", "Creatures", new { SortOrder = "Total" })
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var Creature in Model.AllPokemon) {
+                <tr class="">
+                    <td>
+                        <div class="portrait">
+                            <div class="role">
+                                <span class="ra"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <span>@Creature.Name</span>
+                            <!--a href="@*Url.Action("Creature", "MMEG", new { culture = this.ViewContext.RouteData.Values["culture"].ToString(), species = Creature.SpeciesId, stage = Creature.EvolutionStage, element = Creature.Element.Id })">@Creature.NameEn*@</a-->
+                        </p>
+                    </td>
+                    <td>@Creature.HP</td>
+                    <td>@Creature.ATK</td>
+                    <td>@Creature.DEF</td>
+                    <td>@Creature.SPA</td>
+                    <td>@Creature.SPD</td>
+                    <td>@Creature.SPE</td>
+                    <td>@Creature.Total</td>
+                </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Pokemon</th>
+                    <th>HP</th>
+                    <th>ATK</th>
+                    <th>DEF</th>
+                    <th>SPA</th>
+                    <th>SPD</th>
+                    <th>SPE</th>
+                    <th>Total</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<script>
+    var elements = [];
+    var roles = [];
+
+        function filter(a, b, c) {
+            if ($(a).hasClass("active")) {
+                $(a).removeClass("active");
+
+                if (c == "Element") {
+                    var index = elements.indexOf("." + b);
+                    if (index > -1) {
+                        elements.splice(index, 1);
+                    }
+                } else {
+                    var index = roles.indexOf("." + b);
+                    if (index > -1) {
+                        roles.splice(index, 1);
+                    }
+                }
+            } else {
+                $(a).addClass("active");
+
+                if (c == "Element") {
+                    elements.push("." + b);
+                } else {
+                    roles.push("." + b);
+                }
+            }
+
+            $('#tblCreatures tbody tr').each(function () {
+                $(this).show();
+
+                if (elements.length > 0 && !$(this).is(elements.join(", "))) {
+                    $(this).hide();
+                }
+
+                if (roles.length > 0 && !$(this).is(roles.join(", "))) {
+                    $(this).hide();
+                }
+            });
+        }
+</script>

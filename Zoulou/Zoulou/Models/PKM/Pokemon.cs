@@ -15,11 +15,24 @@ namespace Zoulou.Models.PKM {
         //private TypeRepository _Types;
         //Repository of Moves
         //Repository of Abilities
-        public string name;
+        public string Name;
+        public int HP;
+        public int Atk;
+        public int Def;
+        public int SpA;
+        public int SpD;
+        public int Spe;
+        public int Total { get { return HP + Atk + Def + SpA + SpD + Spe; } }
 
         public Pokemon(Dictionary<string, object> NamedRange) {
             //_PokemonId = Int32.Parse(NamedRange["Nat"].ToString());
-            name = NamedRange["Pokemon"].ToString();
+            Name = NamedRange["Pokemon"].ToString();
+            HP = Int32.Parse(NamedRange["HP"].ToString());
+            Atk = Int32.Parse(NamedRange["Atk"].ToString());
+            Def = Int32.Parse(NamedRange["Def"].ToString());
+            SpA = Int32.Parse(NamedRange["SpA"].ToString());
+            SpD = Int32.Parse(NamedRange["SpD"].ToString());
+            Spe = Int32.Parse(NamedRange["Spe"].ToString());
         }
 
         public Pokemon() {

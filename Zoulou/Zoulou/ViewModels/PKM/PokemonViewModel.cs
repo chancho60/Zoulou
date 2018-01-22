@@ -5,6 +5,13 @@ using System.Web;
 
 namespace Zoulou.ViewModels.PKM {
     public class PokemonViewModel {
-        public string name;
+        public string Name;
+        public int HP;
+        public int ATK;
+        public int DEF;
+        public int SPA;
+        public int SPD;
+        public int SPE;
+        public int Total;
     }
 }

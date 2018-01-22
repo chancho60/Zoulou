@@ -13,7 +13,7 @@
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="@Url.Action("Pokemon", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Pokemon</a>
+                    <a href="@Url.Action("AllPokemon", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Pokemon</a>
                 </li>
                 <li>
                     <a href="@Url.Action("TypeChart", "PKM", new { culture = this.ViewContext.RouteData.Values["culture"].ToString() })">Type Chart</a>
